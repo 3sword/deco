@@ -1,31 +1,40 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Deco</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<script src="/js/lib/angular.js"></script>
+	<script src="/js/daily_report.js"></script>
+</head>
 <body>
+	<div ng-controller="dailyReportCtrl">
+		<div style="width: 50%; float:left">
+			<a href="#"><</a>{{report.date}}<a href="#">></a><br><br>
+			<label>Yesterday's Commitment</label><br>
+			<textarea style="width: 80%;" rows=15 ng-model="report.commitment"></textarea><br>
+			<label>Today's Plan</label><br>
+			<textarea style="width: 80%;" rows=15 ng-model="report.plan"></textarea><br>
+			<label>Problems</label><br>
+			<textarea style="width: 80%;" rows=15 ng-model="report.problem"></textarea><br>
 
-<div style="width: 50%; float:left">
-<a href="#"><</a> 2013-10-29 <a href="#">></a><br><br>
-<label>Yesterday's Commitment</label><br>
-<textarea style="width: 80%;" rows=15></textarea><br>
-<label>Today's Plan</label><br>
-<textarea style="width: 80%;" rows=15></textarea><br>
-<label>Problems</label><br>
-<textarea style="width: 80%;" rows=15></textarea><br>
+			<button ng-click="draft()">Draft</button>
+			<button ng-click="publish()">Publish</button>
+			<button ng-click="back()">Back</button>
+		</div>
 
-<button>Draft</button>
-<button>Publish</button>
-<button>Back</button>
-</div>
+		<div style="width: 50%; float:right">
+			refering <a href="#"><</a> 2013-10-29 <a href="#">></a>
+			<button>1 day before</button><br><br>
+			<label>Yesterday's Commitment</label><br>
+			<textarea disabled style="width: 80%;" rows=15></textarea><br>
+			<label>Today's Plan</label><br>
+			<textarea disabled style="width: 80%;" rows=15></textarea><br>
+			<label>Problems</label><br>
+			<textarea disabled style="width: 80%;" rows=15></textarea><br>
 
-<div style="width: 50%; float:right">
-refering <a href="#"><</a> 2013-10-29 <a href="#">></a>
-<button>1 day before</button><br><br>
-<label>Yesterday's Commitment</label><br>
-<textarea disabled style="width: 80%;" rows=15></textarea><br>
-<label>Today's Plan</label><br>
-<textarea disabled style="width: 80%;" rows=15></textarea><br>
-<label>Problems</label><br>
-<textarea disabled style="width: 80%;" rows=15></textarea><br>
-
-</div>
+		</div>
+	</div>
 </body>
 </html>
