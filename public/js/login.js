@@ -16,7 +16,7 @@ function loginCtrl($scope, $http) {
         console.log(data);
         $http.post('/login', data).
             success(function(data, status, headers, config) {
-                $scope.loginHint = "success";
+                window.location = "/";
             }).
             error(function(data, status, headers, config) {
                 $scope.loginHint = "fail";
