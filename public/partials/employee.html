@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>Employee Detail</h1>
+
+  <form novalidate="novalidate" class="form-horizontal">
+    <div class="control-group" ng-show="employee.id">
+      <label class="control-label" for="inputId">ID:</label>
+      <div class="controls">
+        <input type="text" ng-model="employee.id" disabled />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputName">First Name:</label>
+      <div class="controls">
+        <input type="text" ng-model="employee.first_name" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="inputBirthday">Last Name:</label>
+      <div class="controls">
+        <input type="text" ng-model="employee.last_name" />
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <!-- user-detail.html: -->
+        <a ng-click="cancel()" class="btn btn-small">Cancel</a> <a
+          ng-show="employee.id" ng-click="updateEmployee()"
+          class="btn btn-small btn-primary">Update</a>
+
+        <!-- user-creation.html: -->
+        <a ng-click="createNewEmployee()" ng-hide="employee.id"
+          class="btn btn-small btn-primary">Create</a>
+      </div>
+    </div>
+  </form>
+</div>
