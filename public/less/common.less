@@ -1,6 +1,8 @@
 
 
+@import "color.less";
 
+// useful functions
 .border-radius (@radius: 0.5em) {
   border-radius: @radius;
   -moz-border-radius: @radius;
@@ -19,8 +21,51 @@
 }
 
 
+// custome class style
+div.nav-top {
+  position: static;
+  display: block;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-color: #669966;
+  border: 0px;
+  margin: 0px;
+  .border-radius(0.5em);
+}
 
+div.float-left {
+  position: relative;
+  display: inline;
+  float: left;
+}
+
+div.float-right {
+  position: relative;
+  display: inline;
+  float: right;
+}
+
+div.timeline {
+  height: 1em;
+}
+
+div.timeline .timestamps {
+  position: absolute;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+div.timeline .timestamps .timestamp {
+  position: absolute;
+}
+
+// standard default tag style
 input {
   .border-radius
 }
 
+body {
+  margin: 0px;
+}

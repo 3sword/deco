@@ -1,7 +1,22 @@
+div.timeline {
+  position: static;
+  width: 100%;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 2em;
+  padding-right: 2em;
+  background-color: #b3b3b3;
+  border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -webkit-border-radius: 0.5em;
+}
 input {
   border-radius: 0.5em;
   -moz-border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
+}
+body {
+  margin: 0px;
 }
 #login-div {
   position: fixed;
