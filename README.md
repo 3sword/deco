@@ -10,7 +10,7 @@ install ruby 2.0.0 with rubygem and go to project directory
 
 ~~~bash
 bundle install
-rack db:migrate
+rake db:migrate
 rackup
 ~~~
 
