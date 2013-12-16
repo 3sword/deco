@@ -10,10 +10,14 @@
 </head>
 
 <body>
-  <div id="index-div" ng-controller="indexCtrl">
-    <a href="daily_report.html"><p>Today's Report <span>{{statusToday}}</span></p></a>
+  <div id="login-div" ng-controller="loginCtrl">
+    <input type="text" id="loginName" ng-model="loginName"
+      ng-keypress="tryLogin($event)" placeholder="Login name here."/>
+    <br>
+    <input type="password" id="loginPassword" ng-model="loginPassword"
+      ng-keypress="tryLogin($event)" placeholder="Enter to submit"/>
+    <br>
+    <a id="loginHint">{{loginHint}}</a>
   </div>
-  
-
 </body>
 </html>
