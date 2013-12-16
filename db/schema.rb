@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131213074940) do
+ActiveRecord::Schema.define(version: 20131216025420) do
 
   create_table "daily_reports", force: true do |t|
     t.integer  "user_id"
@@ -28,5 +28,7 @@ ActiveRecord::Schema.define(version: 20131213074940) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["name"], name: "index_users_on_name", unique: true
 
 end
