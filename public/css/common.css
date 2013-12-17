@@ -1,3 +1,9 @@
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
 div.nav-top {
   position: static;
   display: block;
@@ -8,30 +14,18 @@ div.nav-top {
   background-color: #669966;
   border: 0px;
   margin: 0px;
-  border-radius: 0.5em;
-  -moz-border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
-}
-div.float-left {
-  position: relative;
-  display: inline;
-  float: left;
-}
-div.float-right {
-  position: relative;
-  display: inline;
-  float: right;
 }
 div.timeline {
-  height: 1em;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
-div.timeline .timestamps {
-  position: absolute;
-  margin-left: 4em;
-  margin-right: 4em;
+div.timeline .date {
+  width: 4em;
 }
-div.timeline .timestamps .timestamp {
-  position: absolute;
+div.timeline .time {
+  position: relative;
+  float: left;
   background-color: #99CC99;
   width: 3em;
   border-radius: 0.4em;
