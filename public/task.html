@@ -7,10 +7,10 @@
   <script src="/js/lib/angular.js"></script>
   <script src="/js/util/timeline.js"></script>
 </head>
-<body>
+<body ng-controller="timelineCtrl" >
   <div class="nav-top">
-    <div id="top-timeline" class="timeline" ng-controller="timelineCtrl"
-      ng-init="refresh()">
+    <div id="top-timeline" class="timeline" ng-init="refresh()"
+      ng-mousemove="triggerTimeline($event)" ng-mouseleave="hideOperationPanel()">
       <div class="date float-left">
         {{timeFrom | date:"MMM, d"}}
       </div>
@@ -23,5 +23,10 @@
       </div>
     </div>
   </div>
+  <div id="op-cursor" ng-show="showOperation" style="left: {{mouseX}}px;"
+    ng-mouseover="$scope.showOperation=true;" ng-mouseleave="hideOperationPanel($event)">
+    operation, add to timeline, etc...
+  </div>
+  hello world
 </body>
 </html>
