@@ -1,9 +1,9 @@
 'use strict';
 
 /* Controllers */
-angular.module('myApp.controllers', []);
+var decoControllers = angular.module('decoControllers', []);
 
-angular.module('myApp.controllers', []).controller('EmployeeListCtrl', [ '$scope', '$location', 'Restangular', function($scope, $location, Restangular) {
+decoControllers.controller('EmployeeListCtrl', [ '$scope', '$location', 'Restangular', function($scope, $location, Restangular) {
 
     // callback for ng-click 'editEmployee':
     $scope.editEmployee = function(employeeId) {

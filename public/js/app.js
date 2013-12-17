@@ -1,7 +1,14 @@
 'use strict';
 
-// Declare app level module which depends on filters, and services
-angular.module('myApp', [ 'restangular', 'myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers' ]).config([ '$routeProvider', function($routeProvider) {
+var decoApp = angular.module('decoApp',[
+    'ngRoute',
+    'restangular',
+    'decoControllers',
+    'decoServices',
+    'decoFilters'
+    ]);
+
+decoApp.config([ '$routeProvider', function($routeProvider) {
     $routeProvider.when('/employees', {
         templateUrl : 'partials/employees.html',
         controller : 'EmployeeListCtrl'
