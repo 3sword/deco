@@ -10,23 +10,22 @@
 <body ng-controller="timelineCtrl" >
   <div class="nav-top">
     <div id="top-timeline" class="timeline" ng-init="refresh()"
-      ng-mousemove="triggerTimeline($event)" ng-mouseleave="hideOperationPanel()">
+      ng-mousemove="triggerTimeline($event)" ng-mouseleave="hideOperationPanel($event)">
       <div class="date float-left">
         {{timeFrom | date:"MMM, d"}}
       </div>
       <div class="date float-right">
         {{timeTo | date: "MMM, d"}}
       </div>
-      <div class="time" ng-repeat="timestamp in timestamps"
+      <div class="time unselectable" ng-repeat="timestamp in timestamps"
            style="left: {{timestamp.left}}px">
         {{timestamp.time | date: "HH:mm"}}
       </div>
     </div>
   </div>
   <div id="op-cursor" ng-show="showOperation" style="left: {{mouseX}}px;"
-    ng-mouseover="$scope.showOperation=true;" ng-mouseleave="hideOperationPanel($event)">
+    ng-mouseover="triggerTimeline($event)" ng-mouseleave="hideOperationPanel($event)">
     operation, add to timeline, etc...
   </div>
-  hello world
 </body>
 </html>

@@ -3,12 +3,14 @@ function timelineCtrl($scope, $timeout) {
     var DENSITY_MIN = 10;
     var DENSITY_MAX = 20;
     var timeSize = 20;
+    var delayHideOperationFunc = 0;
 
     // defaults one day before
     $scope.timeFrom = Date.now() - 1 * 1000 * 60 * 60 * 24;
     $scope.timeTo = Date.now();
     $scope.timestamps = [];  // in pair, time, left
     $scope.mouseX = 0;
+    $scope.timeAtMouseX = undefined;
     $scope.showOperation = true;
 
 
@@ -30,23 +32,19 @@ function timelineCtrl($scope, $timeout) {
     };
 
     $scope.triggerTimeline = function(ev) {
+        console.log(["op-cursor", "top-timeline"].contains(ev.toElement.id));
+        if (ev != undefined && ev.toElement.id in ["op-cursor", "top-timeline"]) {
+            $timeout.cancel(delayHideOperationFunc);
+        }
         $scope.showOperation = true;
-        console.log(ev.toElement.class);
         if (ev.toElement.id == "top-timeline" || ev.toElement.classList.contains('time')) {
             $scope.mouseX = ev.clientX - 30;
         }
-        console.log(ev);
-        var time = function(ev) {
-            console.log(ev.clientX);
-            return 1;
-        }(ev);
     }
 
     $scope.hideOperationPanel = function(ev) {
-        $timeout(function() {
-            if (ev.toElement.id != "op-cursor") {
-                $scope.showOperation = false;
-            }
+        delayHideOperationFunc = $timeout(function(toElem) {
+            $scope.showOperation = false;
         }, 1000);
     }
 
