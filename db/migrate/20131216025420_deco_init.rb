@@ -18,6 +18,7 @@ class DecoInit < ActiveRecord::Migration
       t.text :commitment
       t.text :plan
       t.text :problem
+      t.string :status
       t.timestamps
     end
 

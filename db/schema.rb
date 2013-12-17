@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(version: 20131216025420) do
     t.text     "commitment"
     t.text     "plan"
     t.text     "problem"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
   end
 
   create_table "users", force: true do |t|
