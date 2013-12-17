@@ -10,10 +10,19 @@ function timelineCtrl($scope) {
         var step = ($scope.timeFrom - $scope.timeTo) / $scope.density;
         var t = $scope.timeFrom;
         $scope.timestamps = [];
-        for (var i = 0; i <= $scope.density; i++) {
-            $scope.timestamps.push(t);
-            t += step;
-        }
+        var divs = document.querySelectorAll("#top-timeline > div");
+        console.log(divs);
+        var totalWidth = divs[2].offsetLeft - divs[0].offsetRight;
+        console.log(divs[2].offsetLeft);
+        console.log(divs[0].offsetRight);
+        console.log(totalWidth);
+        //for (var i = 0; i <= $scope.density; i++) {
+        //    var o = {};
+        //    o['left'] = i * 10;
+        //    o['time'] = t;
+        //    $scope.timestamps.push(o);
+        //    t += step;
+        //}
     };
 
 };

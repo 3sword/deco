@@ -9,18 +9,18 @@
 </head>
 <body>
   <div class="nav-top">
-    <div class="timeline" ng-controller="timelineCtrl"
+    <div id="top-timeline" class="timeline" ng-controller="timelineCtrl"
       ng-init="refresh()">
       <div class="float-left">
         {{timeFrom | date:"MMM, d"}}
       </div>
       <div class="timestamps">
         <div class="timestamp" ng-repeat="timestamp in timestamps"
-             style="left: {{timestamp.left}}">
-          {{timestamp | date: "HH:mm"}}
+             style="left: {{timestamp.left}}em">
+          {{timestamp.time | date: "HH:mm"}}
         </div>
       </div>
-      <div class="float-right">
+      <div class="float-left">
         {{timeTo | date: "MMM, d"}}
       </div>
     </div>

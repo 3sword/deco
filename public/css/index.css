@@ -1,14 +1,37 @@
-div.timeline {
+div.nav-top {
   position: static;
-  width: 100%;
+  display: block;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   padding-left: 2em;
   padding-right: 2em;
-  background-color: #b3b3b3;
+  background-color: #669966;
+  border: 0px;
+  margin: 0px;
   border-radius: 0.5em;
   -moz-border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
+}
+div.float-left {
+  position: relative;
+  display: inline;
+  float: left;
+}
+div.float-right {
+  position: relative;
+  display: inline;
+  float: right;
+}
+div.timeline {
+  height: 1em;
+}
+div.timeline .timestamps {
+  position: absolute;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+div.timeline .timestamps .timestamp {
+  position: absolute;
 }
 input {
   border-radius: 0.5em;
