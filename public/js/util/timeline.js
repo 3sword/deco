@@ -32,8 +32,7 @@ function timelineCtrl($scope, $timeout) {
     };
 
     $scope.triggerTimeline = function(ev) {
-        console.log(["op-cursor", "top-timeline"].contains(ev.toElement.id));
-        if (ev != undefined && ev.toElement.id in ["op-cursor", "top-timeline"]) {
+        if (ev != undefined && ["op-cursor", "top-timeline"].indexOf(ev.toElement.id) != -1) {
             $timeout.cancel(delayHideOperationFunc);
         }
         $scope.showOperation = true;
