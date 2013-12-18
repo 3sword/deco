@@ -3,7 +3,7 @@
 /* Controllers */
 var decoControllers = angular.module('decoControllers', []);
 
-decoControllers.controller('LoginCtrl', ['$scope', 'Restangular', 'AuthenticationService', function($scope, Restangular, AuthenticationService) {
+decoControllers.controller('LoginCtrl', function($scope, Restangular, AuthenticationService) {
     $scope.loginHint = '';
     $scope.loginName = '';
     $scope.loginPassword = '';
@@ -24,4 +24,15 @@ decoControllers.controller('LoginCtrl', ['$scope', 'Restangular', 'Authenticatio
             AuthenticationService.setLoginStatus(false);
         });
     };
-}]);
+});
+
+decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
+    $scope.message = "";
+    if (AuthenticationService.isLoggedIn()) {
+        $scope.message = "Welcome, " + AuthenticationService.getUserName();
+    }
+});
+
+decoControllers.controller('HomeCtrl', function($scope, Restangular) {
+    $scope.reportStatus = Restangular.one('daily_reports/today/status').get();
+});

@@ -4,9 +4,10 @@
 
 var decoServices = angular.module('decoServices', []);
 
-decoServices.service('AuthenticationService',function(Restangular, $cookieStore){
+decoServices.service('AuthenticationService',function(Restangular, $cookies){
 
-    var loginStatus;
+    var loginStatus = false;
+    var userName = "";
 
     this.isLoggedIn = function() {
         return loginStatus;
@@ -14,10 +15,18 @@ decoServices.service('AuthenticationService',function(Restangular, $cookieStore)
 
     this.setLoginStatus = function(status) {
         loginStatus = status;
-        $cookieStore.put('loginStatus', status);
+    }
+
+    this.setUserName = function(name) {
+        userName = name;
+    }
+
+    this.getUserName = function() {
+        return userName;
     }
 
     this.init = function() {
-        loginStatus = $cookieStore.get('loginStatus');
+        userName = $cookies.username;
+        loginStatus = !!userName;
     }
 });

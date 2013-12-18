@@ -18,6 +18,18 @@
   <script src="/js/directives.js"></script>
 </head>
 <body>
+    <div class="navbar navbar-default navbar-fixed-top" ng-controller="HeadCtrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="#" class="navbar-brand">DECO</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">{{message}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div ng-view ></div>
 </body>
 </html>

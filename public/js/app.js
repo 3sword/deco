@@ -14,12 +14,12 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'login.html',
     controller : 'LoginCtrl'
   });
-  $routeProvider.when('/app', {
-    templateUrl : 'app.html',
-    controller : 'AppCtrl'
+  $routeProvider.when('/home', {
+    templateUrl : 'partials/home.html',
+    controller : 'HomeCtrl'
   });
   $routeProvider.otherwise({
-    redirectTo : '/app'
+    redirectTo : '/home'
   });
 
 } ).config( function(RestangularProvider) {

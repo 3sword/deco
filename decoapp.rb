@@ -11,6 +11,15 @@ class DecoApp < Sinatra::Application
     set :session_secret, '*&(^B234'
 
     get "/" do
+        if session[:user].nil?
+            username = nil
+        else
+            username = session[:user][:name]
+        end
+        response.set_cookie("username", {
+            :value => username,
+            :httponly => false
+            })
         send_file File.join(settings.public_folder, 'index.html')
     end
 
@@ -27,27 +36,22 @@ class DecoApp < Sinatra::Application
             @json = JSON.parse(body) unless body.empty?
         end
 
-        get "/login" do
-            unless session[:user].nil?
-                status 200
-            else
-                status 401
-            end
-        end
-
         post "/login" do
             session[:user] = nil
             user = User.find_by(name: @json["username"])
             if user.nil?
                 status 410
             elsif user.password == @json["password"]
-                session[:user] = user.id
+                session[:user] = {:id => user.id, :name => user.name}
+                response.set_cookie("username", {
+                    :value => user.name,
+                    :httponly => false
+                    })
                 status 200
             else
                 status 401
             end
         end
-
 
         post "/users" do
             user = User.new
@@ -70,10 +74,10 @@ class DecoApp < Sinatra::Application
             else
                 date = Date.parse(params[:date])
             end
-            report = DailyReport.find_by(user_id: session[:user], date: date)
+            report = DailyReport.find_by(user_id: session[:user][:id], date: date)
             if report.nil?
                 report = DailyReport.new
-                report.user_id = session[:user]
+                report.user_id = session[:user][:id]
                 report.date = date
                 report.status = "Not created"
                 report.save!
@@ -82,9 +86,8 @@ class DecoApp < Sinatra::Application
         end
 
         post "/daily_reports" do
-            p @json
             date = @json["date"]
-            report = DailyReport.find_by(user_id: session[:user], date: date)
+            report = DailyReport.find_by(user_id: session[:user][:id], date: date)
             if report.nil?
                 report = DailyReport.new(@json)
                 report.status = "Draft"
@@ -101,7 +104,7 @@ class DecoApp < Sinatra::Application
         end
 
         get "/daily_reports/today/status" do
-            report = DailyReport.find_by(user_id: session[:user], date: Date.today)
+            report = DailyReport.find_by(user_id: session[:user][:id], date: Date.today)
             if report.nil?
                 "Not created"
             else
