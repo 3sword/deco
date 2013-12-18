@@ -4,3 +4,5 @@
 node_modules/
 bower_components/
 public/js/lib/*
+public/fonts/
+public/css/bootstrap*

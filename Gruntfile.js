@@ -12,9 +12,28 @@ module.exports = function(grunt) {
             flatten: true,
             src: [
               'jquery/jquery.js', 'jquery/jquery.min.map',
-              'angular/angular.js', 'angular/angular.min.js.map'
+              'angular/angular.js', 'angular/angular.min.js.map',
+              'bootstrap/dist/js/*'
             ],
             dest: 'public/js/lib/'
+          },
+          {
+            expand: true,
+            cwd: 'bower_components/',
+            flatten: true,
+            src: [
+              'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/css/bootstrap-theme.css'
+            ],
+            dest: 'public/css/'
+          },
+          {
+            expand: true,
+            cwd: 'bower_components/',
+            flatten: true,
+            src: [
+              'bootstrap/dist/fonts/*'
+            ],
+            dest: 'public/fonts/'
           }
         ]
       }
@@ -26,7 +45,7 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('build', ['copy']);
- 
+
   grunt.registerTask('default', ['build']);
 
 };
