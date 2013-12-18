@@ -2,6 +2,22 @@
 
 /* Services */
 
-var decoServices = angular.module('decoServices', []); 
+var decoServices = angular.module('decoServices', []);
 
-decoServices.value('version', '0.1');
+decoServices.service('AuthenticationService',function(Restangular, $cookieStore){
+
+    var loginStatus;
+
+    this.isLoggedIn = function() {
+        return loginStatus;
+    }
+
+    this.setLoginStatus = function(status) {
+        loginStatus = status;
+        $cookieStore.put('loginStatus', status);
+    }
+
+    this.init = function() {
+        loginStatus = $cookieStore.get('loginStatus');
+    }
+});

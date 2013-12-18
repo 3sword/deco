@@ -1,0 +1,9 @@
+<div id="login-div">
+  <input type="text" id="loginName" ng-model="loginName"
+  ng-keypress="tryLogin($event)" placeholder="Login name here."/>
+  <br>
+  <input type="password" id="loginPassword" ng-model="loginPassword"
+  ng-keypress="tryLogin($event)" placeholder="Enter to submit"/>
+  <br>
+  <a id="loginHint">{{loginHint}}</a>
+</div>

@@ -17,17 +17,26 @@ class DecoApp < Sinatra::Application
     namespace '/api' do
         def login_required!
             if session[:user].nil?
-                redirect "/login.html"
+                halt 401
             end
         end
 
         before do
-            login_required! unless request.path_info == "/login"
+            login_required! unless request.path_info == "/api/login"
             body = request.body.read
             @json = JSON.parse(body) unless body.empty?
         end
 
+        get "/login" do
+            unless session[:user].nil?
+                status 200
+            else
+                status 401
+            end
+        end
+
         post "/login" do
+            session[:user] = nil
             user = User.find_by(name: @json["username"])
             if user.nil?
                 status 410
