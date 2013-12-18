@@ -13,6 +13,7 @@ module.exports = function(grunt) {
             src: [
               'jquery/jquery.js', 'jquery/jquery.min.map',
               'angular/angular.js', 'angular/angular.min.js.map',
+              'angular-route/angular-route.js', 'angular-route/angular-route.min.js.map',
               'bootstrap/dist/js/*'
             ],
             dest: 'public/js/lib/'
