@@ -12,9 +12,12 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.0.3",
+    "underscore": "~1.5.2",
+    "underscore.string": "~2.3.3",
     "angular": "~1.2.5",
-    "angular-route": "~1.2.5", 
+    "angular-route": "~1.2.5",
+    "angular-cookies": "~1.2.5",
+    "restangular": "1.2.1",
     "bootstrap": "~3.0.3"
   }
 }

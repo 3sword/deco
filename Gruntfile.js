@@ -14,6 +14,10 @@ module.exports = function(grunt) {
               'jquery/jquery.js', 'jquery/jquery.min.map',
               'angular/angular.js', 'angular/angular.min.js.map',
               'angular-route/angular-route.js', 'angular-route/angular-route.min.js.map',
+              'angular-cookies/angular-cookies.js', 'angular-cookies/angular-cookies.min.js.map',
+              'underscore/underscore.js', 'underscore/underscore.min.js.map',
+              'underscore.string/dist/underscore.string.min.js',
+              'restangular/dist/restangular.js',
               'bootstrap/dist/js/*'
             ],
             dest: 'public/js/lib/'
