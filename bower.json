@@ -1,0 +1,19 @@
+{
+  "name": "deco",
+  "version": "0.0.1",
+  "description": "deco",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.0.3",
+    "angular": "~1.2.5",
+    "bootstrap": "~3.0.3"
+  }
+}
