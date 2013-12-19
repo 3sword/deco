@@ -27,10 +27,13 @@ decoControllers.controller('LoginCtrl', function($scope, Restangular, Authentica
 });
 
 decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
-    $scope.message = "";
-    if (AuthenticationService.isLoggedIn()) {
-        $scope.message = "Welcome, " + AuthenticationService.getUserName();
-    }
+    $scope.$watch(function () { return AuthenticationService.getUserName(); }, function(username) {
+        if (!!username){
+            $scope.message = "Welcome, " + username + "!";
+        } else{
+            $scope.message = "";
+        }
+    });
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular) {
