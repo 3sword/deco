@@ -1,0 +1,23 @@
+<div class="container">
+  <form role="form">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Date</label>
+      <input class="form-control" ng-model="report.date" type="date" disabled></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Yesterday's Commitment</label>
+      <textarea class="form-control" rows=9 ng-model="report.commitment"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Today's Plan</label>
+      <textarea class="form-control" rows=9 ng-model="report.plan"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Problems</label>
+      <textarea class="form-control" rows=9 ng-model="report.problem"></textarea>
+    </div>
+    <button id="draft-report-btn" ng-click="draft()" class="btn btn-primary">Draft</button>
+    <button ng-click="back()" class="btn btn-default">Back</button>
+    <button ng-click="publish()" class="btn btn-warning pull-right">Publish</button>
+  </form>
+</div>

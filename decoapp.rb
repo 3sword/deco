@@ -98,15 +98,6 @@ class DecoApp < Sinatra::Application
                 report.to_json
             end
         end
-
-        get "/daily_reports/today/status" do
-            report = DailyReport.find_by(user_id: session[:user][:id], date: Date.today)
-            if report.nil?
-                "Not created"
-            else
-                report.status
-            end
-        end
     end
 
 end

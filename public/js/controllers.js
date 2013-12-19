@@ -36,6 +36,33 @@ decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
     });
 });
 
-decoControllers.controller('HomeCtrl', function($scope, Restangular) {
-    $scope.reportStatus = Restangular.one('daily_reports/today/status').get();
+decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
+    $scope.report = Restangular.one('daily_reports','today').get().$object;
+
+    $scope.showReport = function(){
+        if ($scope.report) {
+            $location.path("/daily_report");
+        }
+    }
+});
+
+decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams) {
+    var date = $routeParams.date;
+    $scope.report = Restangular.one('daily_reports',date).get().$object;
+
+    $scope.draft = function() {
+        $('#draft-report-btn').css('opacity',0);
+        Restangular.all('daily_reports').post($scope.report).then(function(){
+            $('#draft-report-btn').animate({opacity:1}, 1000);
+        });
+    };
+
+    $scope.publish = function() {
+
+
+    };
+
+    $scope.back = function() {
+        $location.path("/home");
+    };
 });
