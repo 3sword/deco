@@ -22,7 +22,6 @@ class DecoInit < ActiveRecord::Migration
       t.string :status
       t.timestamps
     end
-
   end
 
 end
