@@ -48,6 +48,18 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams) {
     var date = $routeParams.date;
+
+    $scope.$watch(function(){
+        if (!$scope.report) {
+            return null;
+        } else {
+            return $scope.report.content;
+        }
+    }, function(content) {
+        content = content || "";
+        $("#preview").html(markdown.toHTML(content));
+    });
+
     $scope.report = Restangular.one('daily_reports',date).get().$object;
 
     $scope.draft = function() {
@@ -61,7 +73,6 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
 
 
     };
-
     $scope.back = function() {
         $location.path("/home");
     };
