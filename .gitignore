@@ -6,3 +6,6 @@ bower_components/
 public/js/lib/*
 public/fonts/
 public/css/bootstrap*
+
+
+public/less-watch-compiler.js
