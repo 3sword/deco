@@ -9,6 +9,7 @@ class DecoApp < Sinatra::Application
     register Sinatra::Namespace
     enable :sessions
     set :session_secret, '*&(^B234'
+    set :daily_report_template, File.read("resources/daily_report_template.md")
 
     get "/" do
         if session[:user].nil?
@@ -74,6 +75,7 @@ class DecoApp < Sinatra::Application
             if report.nil?
                 report = DailyReport.new
                 report.user_id = session[:user][:id]
+                report.content = settings.daily_report_template
                 report.date = date
                 report.status = "Not created"
                 report.save!
