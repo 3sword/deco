@@ -1,3 +1,28 @@
 body {
   padding-top: 60px;
 }
+
+#login-div {
+  position: fixed;
+  left: 50%;
+  margin-left: -10em;
+  top: 50%;
+  margin-top: -1em;
+}
+#loginName {
+  width: 20em;
+  height: 2em;
+  margin: 0.5em;
+  /*.hcenter(-0.5 * @input-width);*/
+  /*.vcenter(-1.5 * @input-height);*/
+}
+#loginPassword {
+  width: 20em;
+  height: 2em;
+  margin: 0.5em;
+  /*.hcenter(-0.5 * @input-width);*/
+  /*.vcenter(0.5 * @input-height);*/
+}
+#loginHint {
+  margin: 0.5em;
+}
