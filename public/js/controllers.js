@@ -3,7 +3,7 @@
 /* Controllers */
 var decoControllers = angular.module('decoControllers', []);
 
-decoControllers.controller('LoginCtrl', function($scope, Restangular, AuthenticationService) {
+decoControllers.controller('LoginCtrl', function($scope, Restangular, AuthenticationService, $location) {
     $scope.loginHint = '';
     $scope.loginName = '';
     $scope.loginPassword = '';
@@ -17,11 +17,11 @@ decoControllers.controller('LoginCtrl', function($scope, Restangular, Authentica
         var data = {'username': $scope.loginName,
                     'password': $scope.loginPassword};
 
-        console.log(data);
-        Restangular.all('login').post(data).then(function(){
-            AuthenticationService.setLoginStatus(true);
+        Restangular.all('login').post(data).then(function(data){
+            AuthenticationService.setUserName(data);
+            $location.path('/home');
         }, function(response){
-            AuthenticationService.setLoginStatus(false);
+            AuthenticationService.setUserName("");
         });
     };
 });

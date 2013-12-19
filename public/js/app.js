@@ -51,7 +51,6 @@ decoApp.config(function($routeProvider, $locationProvider) {
   $httpProvider.responseInterceptors.push(logsOutUserOn401);
 });
 
-
 decoApp.run(function ($rootScope, $location, AuthenticationService) {
 
   // enumerate routes that don't need authentication
@@ -65,7 +64,6 @@ decoApp.run(function ($rootScope, $location, AuthenticationService) {
       });
   };
 
-  AuthenticationService.init();
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     // if route requires auth and user is not logged in
     if (!routeClean($location.url()) && !AuthenticationService.isLoggedIn()) {

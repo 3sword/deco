@@ -11,15 +11,12 @@ class DecoApp < Sinatra::Application
     set :session_secret, '*&(^B234'
 
     get "/" do
-        if session[:user].nil?
-            username = nil
-        else
-            username = session[:user][:name]
-        end
-        response.set_cookie("username", {
-            :value => username,
-            :httponly => false
+        unless session[:user].nil?
+            response.set_cookie("username", {
+                :value => session[:user][:name],
+                :httponly => false
             })
+        end
         send_file File.join(settings.public_folder, 'index.html')
     end
 
@@ -43,11 +40,7 @@ class DecoApp < Sinatra::Application
                 status 410
             elsif user.password == @json["password"]
                 session[:user] = {:id => user.id, :name => user.name}
-                response.set_cookie("username", {
-                    :value => user.name,
-                    :httponly => false
-                    })
-                status 200
+                user.name
             else
                 status 401
             end
