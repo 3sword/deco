@@ -1,7 +1,6 @@
 
 
 class UserGroupMember < ActiveRecord::Base
-    include BCrypt
 
     belongs_to :user
     belongs_to :user_group

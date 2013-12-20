@@ -4,6 +4,8 @@ require "sinatra/activerecord"
 require "./config/environments"
 require "./models/user"
 require "./models/daily_report"
+require "./models/user_group"
+require "./models/user_group_member"
 
 class DecoApp < Sinatra::Application
     register Sinatra::Namespace
@@ -129,6 +131,25 @@ class DecoApp < Sinatra::Application
                 reports = reports.where(:date => from..to).order('date')
             end
             reports.to_json(:include => {:user => {:only => [:realname, :name]}})
+        end
+
+        get "/userGroups" do
+            #UserGroup.all.to_json
+            rs = {}
+            UserGroupMember.all.each do |group_member|
+                gid = group_member.user_group_id
+                uid = group_member.user_id
+                group_name = UserGroup.find(gid).name
+                user_name = User.find(uid).name
+                p group_name
+                p user_name
+                if rs[group_name].nil?
+                    rs[group_name] = []
+                end
+                rs[group_name].push(user_name)
+                p rs
+            end
+            rs.to_json
         end
 
         get "/my_daily_reports/:date" do
