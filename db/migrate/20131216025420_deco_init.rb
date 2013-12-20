@@ -10,7 +10,7 @@ class DecoInit < ActiveRecord::Migration
       t.string :encrypted_password
       t.timestamps
     end
-    add_index :users, :name, :unique => true, :using => :hash
+    add_index :users, :name, :unique => true
 
     create_table :daily_reports do |t|
       t.belongs_to :user

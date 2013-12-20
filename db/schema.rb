@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20131219150251) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "daily_reports", force: true do |t|
     t.integer  "user_id"
     t.date     "date"
@@ -28,6 +31,6 @@ ActiveRecord::Schema.define(version: 20131219150251) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["name"], name: "index_users_on_name", unique: true
+  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
 
 end
