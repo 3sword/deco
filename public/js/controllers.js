@@ -9,10 +9,7 @@ decoControllers.controller('LoginCtrl', function($scope, Restangular, Authentica
     $scope.loginPassword = '';
 
 
-    $scope.tryLogin = function(ev) {
-        if (ev.which != 13) {
-            return;
-        }
+    $scope.tryLogin = function() {
 
         var data = {'username': $scope.loginName,
                     'password': $scope.loginPassword};

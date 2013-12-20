@@ -1,9 +1,8 @@
-<div id="login-div">
-  <input type="text" id="loginName" ng-model="loginName"
-  ng-keypress="tryLogin($event)" placeholder="Login name here."/>
-  <br>
-  <input type="password" id="loginPassword" ng-model="loginPassword"
-  ng-keypress="tryLogin($event)" placeholder="Enter to submit"/>
-  <br>
-  <a id="loginHint">{{loginHint}}</a>
+<div class="container">
+  <form ng-submit="tryLogin()" class="form-signin" role="form">
+    <h2 class="form-signin-heading">Please Sign in</h2>
+    <input type="text" class="form-control" placeholder="User name" required="" autofocus="" ng-model="loginName">
+    <input type="password" class="form-control" placeholder="Password" required="" ng-model="loginPassword">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  </form>
 </div>
