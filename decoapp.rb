@@ -8,7 +8,7 @@ require "./models/daily_report"
 class DecoApp < Sinatra::Application
     register Sinatra::Namespace
     enable :sessions
-    set :session_secret, '*&(^B234'
+    set :index_page, File.read(File.join(settings.public_folder, 'deco.html'))
     set :daily_report_template, File.read("resources/daily_report_template.md")
 
     get "/" do
@@ -21,7 +21,7 @@ class DecoApp < Sinatra::Application
             :value => username,
             :httponly => false
         })
-        send_file File.join(settings.public_folder, 'index.html')
+        settings.index_page
     end
 
     namespace '/api' do
