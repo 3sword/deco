@@ -83,7 +83,7 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
 
     $scope.publish = function() {
         Restangular.all('daily_reports').post($scope.report, {publish:true}).then(function(){
-            console.log("published");
+            $scope.report.status = "Published";
         });
     };
     $scope.back = function() {
