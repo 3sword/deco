@@ -84,18 +84,23 @@ class DecoApp < Sinatra::Application
         end
 
         post "/daily_reports" do
+            if params[:publish]
+                status = "Published"
+            else
+                status = "Draft"
+            end
             date = @json["date"]
             report = DailyReport.find_by(user_id: session[:user][:id], date: date)
             if report.nil?
                 report = DailyReport.new(@json)
-                report.status = "Draft"
+                report.status = status
                 report.save!
                 report.to_json
             elsif report.status == "Published"
                 status 403
             else
                 report.assign_attributes(@json)
-                report.status = "Draft"
+                report.status = status
                 report.save
                 report.to_json
             end

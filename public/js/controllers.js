@@ -62,6 +62,18 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
 
     $scope.report = Restangular.one('daily_reports',date).get().$object;
 
+    $scope.showEdit = function() {
+        return $scope.report.status && $scope.report.status != 'Published';
+    }
+
+    $scope.previewWidth = function(){
+        if($scope.showEdit()) {
+            return 6;
+        } else {
+            return 12;
+        }
+    }
+
     $scope.draft = function() {
         $('#draft-report-btn').css('opacity',0);
         Restangular.all('daily_reports').post($scope.report).then(function(){
@@ -70,8 +82,9 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
     };
 
     $scope.publish = function() {
-
-
+        Restangular.all('daily_reports').post($scope.report, {publish:true}).then(function(){
+            console.log("published");
+        });
     };
     $scope.back = function() {
         $location.path("/home");
