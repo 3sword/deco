@@ -30,7 +30,7 @@ class DecoApp < Sinatra::Application
         end
 
         before do
-            login_required! unless request.path_info == "/api/login"
+            login_required! unless ["/api/login", "/api/signup"].include?(request.path_info)
             body = request.body.read
             @json = JSON.parse(body) unless body.empty?
         end
@@ -48,11 +48,16 @@ class DecoApp < Sinatra::Application
             end
         end
 
-        post "/users" do
+        post "/signup" do
+            user = User.find_by(name: @json["username"])
+            halt 409 unless user.nil?
+
             user = User.new
-            user.name = @json[:username]
-            user.password = @json[:password]
+            user.name = @json["username"]
+            user.password = @json["password"]
             user.save!
+            session[:user] = {:id => user.id, :name => user.name}
+            user.name
         end
 
         get "/users" do

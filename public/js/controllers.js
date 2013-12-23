@@ -4,10 +4,6 @@
 var decoControllers = angular.module('decoControllers', []);
 
 decoControllers.controller('LoginCtrl', function($scope, Restangular, AuthenticationService, $location) {
-    $scope.loginHint = '';
-    $scope.loginName = '';
-    $scope.loginPassword = '';
-
 
     $scope.tryLogin = function() {
 
@@ -22,6 +18,26 @@ decoControllers.controller('LoginCtrl', function($scope, Restangular, Authentica
         });
     };
 });
+
+decoControllers.controller('SignupCtrl', function($scope, Restangular, AuthenticationService, $location) {
+
+    $scope.trySignup = function() {
+        if ($scope.loginPassword != $scope.confirmPassword) {
+            $("#conpassword").css("border-color","#FF0000");
+            return;
+        }
+        var data = {'username': $scope.loginName,
+                    'password': $scope.loginPassword};
+
+        Restangular.all('signup').post(data).then(function(data){
+            AuthenticationService.setUserName(data);
+            $location.path('/home');
+        }, function(response){
+            AuthenticationService.setUserName("");
+        });
+    };
+});
+
 
 decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
     $scope.$watch(function () { return AuthenticationService.getUserName(); }, function(username) {

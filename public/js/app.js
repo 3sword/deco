@@ -14,6 +14,10 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'login.html',
     controller : 'LoginCtrl'
   });
+  $routeProvider.when('/signup', {
+    templateUrl : 'signup.html',
+    controller : 'SignupCtrl'
+  });
   $routeProvider.when('/home', {
     templateUrl : 'partials/home.html',
     controller : 'HomeCtrl'
@@ -62,7 +66,7 @@ decoApp.config(function($routeProvider, $locationProvider) {
 decoApp.run(function ($rootScope, $location, AuthenticationService) {
 
   // enumerate routes that don't need authentication
-  var routesThatDontRequireAuth = ['/login'];
+  var routesThatDontRequireAuth = ['/login', '/signup'];
 
   // check if current location matches route
   var routeClean = function (route) {
