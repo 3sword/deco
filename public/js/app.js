@@ -22,6 +22,10 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'partials/daily_report.html',
     controller : 'DailyReportCtrl'
   });
+  $routeProvider.when('/published_daily_reports/:username/:date', {
+    templateUrl : 'partials/daily_report.html',
+    controller : 'DailyReportCtrl'
+  });
   $routeProvider.otherwise({
     redirectTo : '/home'
   });

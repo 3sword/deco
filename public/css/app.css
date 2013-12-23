@@ -39,5 +39,9 @@ body {
 }
 
 .date-nav {
-  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.news-board {
+  margin-top: 80px;
 }

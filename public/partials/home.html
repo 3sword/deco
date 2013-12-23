@@ -1,6 +1,6 @@
 <div class="container">
-<h2><a href="#/my_daily_reports/today" ng-click="showReport()">Today's report</a> <span class="label label-default">{{todaysReport.status}}</span></h2>
-<div class="well">
-    <p ng-repeat="report in publishedReports"><a href="#">{{report.user.name}} published today's report at {{report.updated_at | date:'shortTime'}}</a></p>
+<h2><a href="#/my_daily_reports/{{todaysReport.date}}" ng-click="showReport()">Today's report</a> <span class="label label-default">{{todaysReport.status}}</span></h2>
+<div class="well news-board">
+    <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.name}} published today's report at {{report.updated_at | date:'shortTime'}}</a></p>
 </div>
 </div>

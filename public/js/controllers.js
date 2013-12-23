@@ -40,7 +40,7 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
 
-    var weekday=new Array(7);
+    var weekday=new Array(7), urlPrefix;
     weekday[0]="Sun";
     weekday[1]="Mon";
     weekday[2]="Tue";
@@ -56,25 +56,37 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
             return $scope.report.content;
         }
     }, function(content) {
-        content = content || "";
-        $("#preview").html(markdown.toHTML(content));
-    });
-
-    Restangular.one('my_daily_reports',$routeParams.date).get().then(function(data){
-        $scope.report = data;
-        $scope.navs=[];
-
-        for (var i=-3; i<=3; i++){
-            var date = new Date(new Date($scope.report.date).getTime() + (24 * 60 * 60 * 1000 * i)), nav = {};
-            nav.href = "#/my_daily_reports/" + $filter("date")(date, "yyyy-MM-dd");
-            if (i==0) {
-                nav.text = $filter("date")(date) + " " + weekday[date.getDay()];
-            } else {
-                nav.text = weekday[date.getDay()];
-            }
-            $scope.navs.push(nav);
+        if (content) {
+            $("#preview").html(markdown.toHTML(content));
         }
     });
+
+    if ($routeParams.username == null) {
+        urlPrefix = "my_daily_reports";
+    } else {
+        urlPrefix = "published_daily_reports/" + $routeParams.username;
+    }
+    $scope.navs=[];
+
+    for (var i=-3; i<=3; i++){
+        var date = new Date(new Date($routeParams.date).getTime() + (24 * 60 * 60 * 1000 * i)), nav = {};
+        nav.href = "#/" + urlPrefix + "/" + $filter("date")(date, "yyyy-MM-dd");
+        if (i==0) {
+            nav.text = $filter("date")(date) + " " + weekday[date.getDay()];
+        } else {
+            nav.text = weekday[date.getDay()];
+        }
+        $scope.navs.push(nav);
+    }
+
+    Restangular.one(urlPrefix,$routeParams.date).get().then(function(data){
+        $scope.report = data;
+    }, function(response) {
+        if (response.status == 404) {
+            $("#preview").html('<span class="label label-default">Not published yet</span>');
+        }
+    });
+
 
     $scope.showEdit = function() {
         if (!$scope.report) {
