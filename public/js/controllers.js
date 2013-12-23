@@ -34,13 +34,8 @@ decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
-    $scope.report = Restangular.one('daily_reports','today').get().$object;
-
-    $scope.showReport = function(){
-        if ($scope.report) {
-            $location.path("/daily_report");
-        }
-    }
+    $scope.todaysReport = Restangular.one('my_daily_reports','today').get().$object;
+    $scope.publishedReports = Restangular.all('published_daily_reports').getList().$object;
 });
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
@@ -65,13 +60,13 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
         $("#preview").html(markdown.toHTML(content));
     });
 
-    Restangular.one('daily_reports',$routeParams.date).get().then(function(data){
+    Restangular.one('my_daily_reports',$routeParams.date).get().then(function(data){
         $scope.report = data;
         $scope.navs=[];
 
         for (var i=-3; i<=3; i++){
             var date = new Date(new Date($scope.report.date).getTime() + (24 * 60 * 60 * 1000 * i)), nav = {};
-            nav.href = "#/daily_reports/" + $filter("date")(date, "yyyy-MM-dd");
+            nav.href = "#/my_daily_reports/" + $filter("date")(date, "yyyy-MM-dd");
             if (i==0) {
                 nav.text = $filter("date")(date) + " " + weekday[date.getDay()];
             } else {
@@ -98,13 +93,13 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
 
     $scope.draft = function() {
         $('#draft-report-btn').css('opacity',0);
-        Restangular.all('daily_reports').post($scope.report).then(function(){
+        Restangular.all('my_daily_reports').post($scope.report).then(function(){
             $('#draft-report-btn').animate({opacity:1}, 1000);
         });
     };
 
     $scope.publish = function() {
-        Restangular.all('daily_reports').post($scope.report, {publish:true}).then(function(){
+        Restangular.all('my_daily_reports').post($scope.report, {publish:true}).then(function(){
             $scope.report.status = "Published";
         });
     };

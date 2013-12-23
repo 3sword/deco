@@ -18,7 +18,7 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'partials/home.html',
     controller : 'HomeCtrl'
   });
-  $routeProvider.when('/daily_reports/:date', {
+  $routeProvider.when('/my_daily_reports/:date', {
     templateUrl : 'partials/daily_report.html',
     controller : 'DailyReportCtrl'
   });

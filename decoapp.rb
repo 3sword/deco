@@ -26,9 +26,7 @@ class DecoApp < Sinatra::Application
 
     namespace '/api' do
         def login_required!
-            if session[:user].nil?
-                halt 401
-            end
+            halt 401 if session[:user].nil?
         end
 
         before do
@@ -61,11 +59,20 @@ class DecoApp < Sinatra::Application
             User.all.to_json
         end
 
-        get "/daily_reports" do
-            DailyReport.all.to_json
+        get "/published_daily_reports/:username/:date" do
+            report = User.find_by(name: params[:username]).daily_reports.published.find_by(date: params[:date])
+            if report.nil?
+                404
+            else
+                report.to_json
+            end
         end
 
-        get "/daily_reports/:date" do
+        get "/published_daily_reports" do
+            DailyReport.published.updated_today.order('updated_at DESC').to_json(:include => {:user => {:only => :name}})
+        end
+
+        get "/my_daily_reports/:date" do
             if params[:date] == "today"
                 date = Date.today
             else
@@ -83,7 +90,8 @@ class DecoApp < Sinatra::Application
             report.to_json
         end
 
-        post "/daily_reports" do
+        post "/my_daily_reports" do
+            halt 403 if @json["user_id"] != session[:user][:id]
             if params[:publish]
                 status = "Published"
             else
