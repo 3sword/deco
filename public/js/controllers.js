@@ -43,8 +43,16 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
     }
 });
 
-decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams) {
-    var date = $routeParams.date;
+decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
+
+    var weekday=new Array(7);
+    weekday[0]="Sun";
+    weekday[1]="Mon";
+    weekday[2]="Tue";
+    weekday[3]="Wed";
+    weekday[4]="Thu";
+    weekday[5]="Fri";
+    weekday[6]="Sat";
 
     $scope.$watch(function(){
         if (!$scope.report) {
@@ -57,9 +65,26 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
         $("#preview").html(markdown.toHTML(content));
     });
 
-    $scope.report = Restangular.one('daily_reports',date).get().$object;
+    Restangular.one('daily_reports',$routeParams.date).get().then(function(data){
+        $scope.report = data;
+        $scope.navs=[];
+
+        for (var i=-3; i<=3; i++){
+            var date = new Date(new Date($scope.report.date).getTime() + (24 * 60 * 60 * 1000 * i)), nav = {};
+            nav.href = "#/daily_reports/" + $filter("date")(date, "yyyy-MM-dd");
+            if (i==0) {
+                nav.text = $filter("date")(date) + " " + weekday[date.getDay()];
+            } else {
+                nav.text = weekday[date.getDay()];
+            }
+            $scope.navs.push(nav);
+        }
+    });
 
     $scope.showEdit = function() {
+        if (!$scope.report) {
+            return null;
+        }
         return $scope.report.status && $scope.report.status != 'Published';
     }
 
@@ -86,4 +111,5 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
     $scope.back = function() {
         $location.path("/home");
     };
+
 });
