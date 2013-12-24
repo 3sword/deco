@@ -34,6 +34,15 @@ class DecoApp < Sinatra::Application
             @json = JSON.parse(body) unless body.empty?
         end
 
+        get "/login" do
+            user = User.find(params[:userid])
+            if user.nil?
+                status 404
+            else
+                user.to_json(:except => :encrypted_password)
+            end
+        end
+
         post "/login" do
             session[:user] = nil
             user = User.find_by(name: @json["username"])
@@ -41,7 +50,7 @@ class DecoApp < Sinatra::Application
                 status 410
             elsif user.password == @json["password"]
                 session[:user] = {:id => user.id, :name => user.name}
-                [user.id, user.name].to_s
+                user.to_json(:except => :encrypted_password)
             else
                 status 401
             end
@@ -57,7 +66,7 @@ class DecoApp < Sinatra::Application
             user.password = @json["password"]
             user.save!
             session[:user] = {:id => user.id, :name => user.name}
-            [user.id, user.name].to_s
+            user.to_json(:except => :encrypted_password)
         end
 
         get "/users" do

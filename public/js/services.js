@@ -7,23 +7,21 @@ var decoServices = angular.module('decoServices', []);
 decoServices.service('AuthenticationService',function(Restangular, $cookies){
 
     var userId = $cookies.userid;
-    var userName = "";
+    var user;
+    if (userId) {
+        user = Restangular.one('login').get({userid: userId}).$object;
+    }
 
     this.isLoggedIn = function() {
-        return !!userId;
+        return !!user;
     }
 
-    this.setUser = function(id, name) {
-        userId = id;
-        userName = name;
+    this.setUser = function(data) {
+        user = data;
     }
 
-    this.getUserId = function() {
-        return userId;
-    }
-
-    this.getUserName = function() {
-        return userName;
+    this.getUser = function() {
+        return user;
     }
 
 });

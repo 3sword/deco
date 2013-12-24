@@ -75,7 +75,6 @@ decoApp.run(function ($rootScope, $location, AuthenticationService) {
         return _.str.startsWith(route, noAuthRoute);
       });
   };
-
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     // if route requires auth and user is not logged in
     if (!routeClean($location.url()) && !AuthenticationService.isLoggedIn()) {
