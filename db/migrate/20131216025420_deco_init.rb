@@ -22,8 +22,6 @@ class DecoInit < ActiveRecord::Migration
       t.timestamps
     end
 
-    User.create(name: "liu", encrypted_password: BCrypt::Password.create("liu"));
-    User.create(name: "feng", encrypted_password: BCrypt::Password.create("feng"));
   end
 
 
