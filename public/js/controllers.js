@@ -62,6 +62,10 @@ decoControllers.controller('HeadCtrl', function($scope, Restangular, Authenticat
             $location.path('/');
         })
     };
+
+    $scope.isLoggedIn = function() {
+        return AuthenticationService.isLoggedIn();
+    };
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
