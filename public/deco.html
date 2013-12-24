@@ -27,7 +27,16 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">{{message}}</a></li>
+            <li>
+              <a href="#">{{message}}</a>
+            </li>
+            <li>
+              <form ng-submit="logout()" class="form-inline">
+                <button type="submit" class="btn btn-link">
+                  Logout <span class="glyphicon glyphicon-log-out"></span>
+                </buttons>
+              </form>
+            </li>
           </ul>
         </div>
       </div>
