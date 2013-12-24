@@ -73,9 +73,8 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
             return $scope.report.content;
         }
     }, function(content) {
-        if (content) {
-            $("#preview").html(markdown.toHTML(content));
-        }
+        content = content || "";
+        $("#preview").html(markdown.toHTML(content));
     });
 
     if ($routeParams.username == null) {
