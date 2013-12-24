@@ -3,8 +3,10 @@
 require 'rubygems'
 require 'sinatra'
 
-set :environment, ENV['RACK_ENV'].to_sym
-disable :run, :reload
+use Rack::Session::Cookie, :key => 'rack.session',
+                           :path => '/',
+                           :expire_after => 2592000,
+                           :secret => 'worksap'
 
 require "./decoapp.rb"
 run DecoApp.new

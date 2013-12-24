@@ -7,7 +7,6 @@ require "./models/daily_report"
 
 class DecoApp < Sinatra::Application
     register Sinatra::Namespace
-    enable :sessions
     set :index_page, File.read(File.join(settings.public_folder, 'deco.html'))
     set :daily_report_template, File.read("resources/daily_report_template.md")
 
