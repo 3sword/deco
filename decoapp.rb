@@ -13,12 +13,12 @@ class DecoApp < Sinatra::Application
 
     get "/" do
         if session[:user].nil?
-            username = nil
+            user_id = nil
         else
-            username = session[:user][:name]
+            user_id = session[:user][:id]
         end
-        response.set_cookie("username", {
-            :value => username,
+        response.set_cookie("userid", {
+            :value => user_id,
             :httponly => false
         })
         settings.index_page
@@ -42,7 +42,7 @@ class DecoApp < Sinatra::Application
                 status 410
             elsif user.password == @json["password"]
                 session[:user] = {:id => user.id, :name => user.name}
-                user.name
+                [user.id, user.name].to_s
             else
                 status 401
             end
@@ -58,7 +58,7 @@ class DecoApp < Sinatra::Application
             user.password = @json["password"]
             user.save!
             session[:user] = {:id => user.id, :name => user.name}
-            user.name
+            [user.id, user.name].to_s
         end
 
         get "/users" do

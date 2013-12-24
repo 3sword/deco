@@ -6,14 +6,20 @@ var decoServices = angular.module('decoServices', []);
 
 decoServices.service('AuthenticationService',function(Restangular, $cookies){
 
-    var userName = $cookies.username;
+    var userId = $cookies.userid;
+    var userName = "";
 
     this.isLoggedIn = function() {
-        return !!userName;
+        return !!userId;
     }
 
-    this.setUserName = function(name) {
+    this.setUser = function(id, name) {
+        userId = id;
         userName = name;
+    }
+
+    this.getUserId = function() {
+        return userId;
     }
 
     this.getUserName = function() {

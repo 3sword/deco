@@ -11,10 +11,10 @@ decoControllers.controller('LoginCtrl', function($scope, Restangular, Authentica
                     'password': $scope.loginPassword};
 
         Restangular.all('login').post(data).then(function(data){
-            AuthenticationService.setUserName(data);
+            AuthenticationService.setUser(data[0], data[1]);
             $location.path('/home');
         }, function(response){
-            AuthenticationService.setUserName("");
+            AuthenticationService.setUser(null, null);
         });
     };
 });
@@ -31,10 +31,10 @@ decoControllers.controller('SignupCtrl', function($scope, Restangular, Authentic
                     'password': $scope.loginPassword};
 
         Restangular.all('signup').post(data).then(function(data){
-            AuthenticationService.setUserName(data);
+            AuthenticationService.setUser(data[0], data[1]);
             $location.path('/home');
         }, function(response){
-            AuthenticationService.setUserName("");
+            AuthenticationService.setUser(null, null);
         });
     };
 });
