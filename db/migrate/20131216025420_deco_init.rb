@@ -7,6 +7,7 @@ class DecoInit < ActiveRecord::Migration
   def change
     create_table :users do |t|
       t.string :name
+      t.string :realname
       t.string :encrypted_password
       t.timestamps
     end
@@ -24,11 +25,5 @@ class DecoInit < ActiveRecord::Migration
 
   end
 
-
-  def up
-  end
-
-  def down
-  end
 end
 

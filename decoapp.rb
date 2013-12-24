@@ -54,6 +54,7 @@ class DecoApp < Sinatra::Application
 
             user = User.new
             user.name = @json["username"]
+            user.realname = @json["realname"]
             user.password = @json["password"]
             user.save!
             session[:user] = {:id => user.id, :name => user.name}
@@ -74,7 +75,7 @@ class DecoApp < Sinatra::Application
         end
 
         get "/published_daily_reports" do
-            DailyReport.published.updated_today.order('updated_at DESC').to_json(:include => {:user => {:only => :name}})
+            DailyReport.published.updated_today.order('updated_at DESC').to_json(:include => {:user => {:only => [:realname, :name]}})
         end
 
         get "/my_daily_reports/:date" do

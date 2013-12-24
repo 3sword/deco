@@ -27,6 +27,7 @@ decoControllers.controller('SignupCtrl', function($scope, Restangular, Authentic
             return;
         }
         var data = {'username': $scope.loginName,
+                    'realname': $scope.realName,
                     'password': $scope.loginPassword};
 
         Restangular.all('signup').post(data).then(function(data){
