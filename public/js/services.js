@@ -4,7 +4,7 @@
 
 var decoServices = angular.module('decoServices', []);
 
-decoServices.service('AuthenticationService',function(Restangular, $cookies){
+decoServices.service('AuthenticationService',function(Restangular, $cookies, $cookieStore){
 
     var userId = $cookies.userid;
     var user;
@@ -22,6 +22,11 @@ decoServices.service('AuthenticationService',function(Restangular, $cookies){
 
     this.getUser = function() {
         return user;
+    }
+
+    this.logout = function() {
+        user = null;
+        $cookieStore.remove('userid');
     }
 
 });

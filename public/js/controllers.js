@@ -40,7 +40,7 @@ decoControllers.controller('SignupCtrl', function($scope, Restangular, Authentic
 });
 
 
-decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
+decoControllers.controller('HeadCtrl', function($scope, Restangular, AuthenticationService, $location) {
     $scope.$watch(function () {
         var user = AuthenticationService.getUser();
         if (user) {
@@ -55,6 +55,17 @@ decoControllers.controller('HeadCtrl', function($scope, AuthenticationService) {
             $scope.message = "";
         }
     });
+
+    $scope.logout = function() {
+        Restangular.all('logout').post().then(function() {
+            AuthenticationService.logout();
+            $location.path('/');
+        })
+    };
+
+    $scope.isLoggedIn = function() {
+        return AuthenticationService.isLoggedIn();
+    };
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {

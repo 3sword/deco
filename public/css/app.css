@@ -52,3 +52,7 @@ body {
 h2 a.subtitle {
   font-size: small;
 }
+
+.btn-logout {
+  text-decoration: none;
+}

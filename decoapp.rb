@@ -56,6 +56,11 @@ class DecoApp < Sinatra::Application
             end
         end
 
+        post "/logout" do
+            session.clear
+            status 200
+        end
+
         post "/signup" do
             user = User.find_by(name: @json["username"])
             halt 409 unless user.nil?

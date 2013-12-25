@@ -26,9 +26,14 @@
           <a href="#" class="navbar-brand">DECO</a>
         </div>
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">{{message}}</a></li>
-          </ul>
+          <form ng-if="isLoggedIn()" ng-submit="logout()" class="navbar-form navbar-right">
+            <div class="form-group">
+              <a href="#" class="navbar-link">{{message}}</a>
+            </div>
+            <button type="submit" class="btn btn-link btn-logout" title="logout">
+              <span class="text-danger glyphicon glyphicon-log-out"></span>
+            </button>
+          </form>
         </div>
       </div>
     </div>
