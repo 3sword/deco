@@ -31,7 +31,11 @@ class DecoApp < Sinatra::Application
         before do
             login_required! unless ["/api/login", "/api/signup"].include?(request.path_info)
             body = request.body.read
-            @json = JSON.parse(body) unless body.empty?
+            unless body.empty?
+                @json = JSON.parse(body)
+                @json.delete("created_at")
+                @json.delete("updated_at")
+            end
         end
 
         get "/login" do
