@@ -9,3 +9,5 @@ public/css/bootstrap*
 
 
 public/less-watch-compiler.js
+
+.bundle/
