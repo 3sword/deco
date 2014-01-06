@@ -69,8 +69,27 @@ decoControllers.controller('HeadCtrl', function($scope, Restangular, Authenticat
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
-    $scope.todaysReport = Restangular.one('my_daily_reports','today').get().$object;
-    $scope.publishedReports = Restangular.all('published_daily_reports').getList().$object;
+    var today;
+    Restangular.one('my_daily_reports','today').get().then(function(data){
+        $scope.todaysReport = data;
+        today = data.date;
+        Restangular.all('published_daily_reports').getList().then(function(data){
+            var len = data.length, i;
+            for(i=0;i<len;i++) {
+                data[i].dateDescription = convertDateDescription(data[i].date);
+            }
+            $scope.publishedReports = data;
+        });
+    });
+
+    function convertDateDescription(date) {
+        if (date == today) {
+            return "today's report";
+        } else {
+            return "report of " + date;
+        }
+    }
+
 });
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
