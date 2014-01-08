@@ -35,6 +35,10 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'partials/report_list.html',
     controller : 'ReportListCtrl'
   });
+  $routeProvider.when('/user', {
+    templateUrl : 'partials/user.html',
+    controller: 'UserCtrl'
+  });
   $routeProvider.otherwise({
     redirectTo : '/home'
   });

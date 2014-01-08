@@ -68,6 +68,10 @@ decoControllers.controller('HeadCtrl', function($scope, Restangular, Authenticat
     };
 });
 
+decoControllers.controller('UserCtrl', function($scope, Restangular, $location) {
+    
+});
+
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
     var today;
     Restangular.one('my_daily_reports','today').get().then(function(data){
