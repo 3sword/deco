@@ -68,8 +68,8 @@ decoControllers.controller('HeadCtrl', function($scope, Restangular, Authenticat
     };
 });
 
-decoControllers.controller('UserCtrl', function($scope, Restangular, $location) {
-    
+decoControllers.controller('UserCtrl', function($scope, Restangular, $location, AuthenticationService) {
+    $scope.user = AuthenticationService.getUser();
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
