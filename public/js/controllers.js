@@ -172,4 +172,11 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
         $location.path("/home");
     };
 
+    window.onbeforeunload = function(){
+        Restangular.all('my_daily_reports').post($scope.report);
+    };
+
+    $scope.$on('$locationChangeStart', function(event, next, current) {
+        Restangular.all('my_daily_reports').post($scope.report);
+    });
 });
