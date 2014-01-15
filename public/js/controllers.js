@@ -173,10 +173,18 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
     };
 
     window.onbeforeunload = function(){
-        Restangular.all('my_daily_reports').post($scope.report);
+        var message = 'Unsaved changes will be lost!';
+        if (typeof event == 'undefined') {
+            event = window.event;
+        }
+        if (event) {
+            event.returnValue = message;
+        }
+        return message;
     };
 
     $scope.$on('$locationChangeStart', function(event, next, current) {
         Restangular.all('my_daily_reports').post($scope.report);
+        window.onbeforeunload = undefined;
     });
 });
