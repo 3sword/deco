@@ -15,7 +15,7 @@
       </div>
     </form>
     <br>
-    <label ng-repeat-start="report in reports">Date: {{report.date}}</label>
+    <label ng-repeat-start="report in reports">{{report.date | date:'mediumDate'}}</label>
     <div class="well preview" ng-bind-html="report.formattedContent" ng-repeat-end>
     </div>
 </div>

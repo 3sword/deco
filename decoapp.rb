@@ -92,7 +92,28 @@ class DecoApp < Sinatra::Application
         end
 
         get "/published_daily_reports" do
-            DailyReport.published.updated_today.order('updated_at DESC').to_json(:include => {:user => {:only => [:realname, :name]}})
+            reports = DailyReport.published
+            reports = reports.where(:user_id => params[:userid]) unless params[:userid].nil?
+            if params[:period].nil?
+                reports = reports.updated_today.order('updated_at DESC')
+            else
+                case params[:period]
+                when "tweek"
+                    from = Time.now.beginning_of_week
+                    to = Time.now.end_of_week
+                when "lweek"
+                    from = Time.now.beginning_of_week.weeks_ago(1)
+                    to = Time.now.end_of_week.weeks_ago(1)
+                when "tmonth"
+                    from = Time.now.beginning_of_month
+                    to = Time.now.end_of_month
+                when "lmonth"
+                    from = Time.now.beginning_of_month.months_ago(1)
+                    to = Time.now.end_of_month.months_ago(1)
+                end
+                reports = reports.where(:date => from..to).order('date')
+            end
+            reports.to_json(:include => {:user => {:only => [:realname, :name]}})
         end
 
         get "/my_daily_reports/:date" do
