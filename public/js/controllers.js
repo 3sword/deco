@@ -191,3 +191,27 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
     };
 
 });
+
+
+decoControllers.controller('ReportListCtrl', function($scope, Restangular, $location, $routeParams, AuthenticationService) {
+    Restangular.all('users').getList().then(function(data){
+        $scope.users = data;
+        $scope.user = data.filter(function(o){
+            return o.id == AuthenticationService.getUser().id;
+        })[0];
+        $scope.period = "tweek";
+        $scope.fetchReports();
+    });
+
+    $scope.fetchReports = function () {
+        console.log($scope.user);
+        console.log($scope.period);
+        Restangular.all('published_daily_reports').getList({period:$scope.period}).then(function(data){
+            var len = data.length, i;
+            for(i=0;i<len;i++) {
+                data[i].formattedContent = markdown.toHTML(data[i].content);
+            }
+            $scope.reports = data;
+        });
+    }
+});

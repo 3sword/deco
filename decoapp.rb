@@ -79,7 +79,7 @@ class DecoApp < Sinatra::Application
         end
 
         get "/users" do
-            User.all.to_json
+            User.all.to_json(:except => :encrypted_password)
         end
 
         get "/published_daily_reports/:username/:date" do

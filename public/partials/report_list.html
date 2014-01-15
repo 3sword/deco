@@ -1,0 +1,21 @@
+<div class="container">
+    <form class="form-inline" role="form">
+      <div class="form-group">
+        <label for="user">User</label>
+        <select class="form-control" id="user" ng-model="user" ng-options="u.realname for u in users" ng-change="fetchReports()"></select>
+      </div>
+      <div class="form-group">
+        <label for="period">Period</label>
+        <select class="form-control" id="period" ng-model="period" ng-change="fetchReports()">
+            <option value="tweek">This Week</option>
+            <option value="tmonth">This Month</option>
+            <option value="lweek">Last Week</option>
+            <option value="lmonth">Last Month</option>
+        </select>
+      </div>
+    </form>
+    <br>
+    <label ng-repeat-start="report in reports">Date: {{report.date}}</label>
+    <div class="well preview" ng-bind-html="report.formattedContent" ng-repeat-end>
+    </div>
+</div>

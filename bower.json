@@ -17,6 +17,7 @@
     "angular": "~1.2.5",
     "angular-route": "~1.2.5",
     "angular-cookies": "~1.2.5",
+    "angular-sanitize": "~1.2.5",
     "restangular": "~1.2.1",
     "bootstrap": "~3.0.3",
     "markdown": "~0.5.0"

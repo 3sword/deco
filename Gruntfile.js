@@ -15,6 +15,7 @@ module.exports = function(grunt) {
               'angular/angular.js', 'angular/angular.min.js.map',
               'angular-route/angular-route.js', 'angular-route/angular-route.min.js.map',
               'angular-cookies/angular-cookies.js', 'angular-cookies/angular-cookies.min.js.map',
+              'angular-sanitize/angular-sanitize.js', 'angular-sanitize/angular-sanitize.min.js.map',
               'underscore/underscore.js', 'underscore/underscore.min.js.map',
               'underscore.string/dist/underscore.string.min.js',
               'restangular/dist/restangular.js', 'markdown/lib/markdown.js',

@@ -3,6 +3,7 @@
 var decoApp = angular.module('decoApp',[
   'ngRoute',
   'ngCookies',
+  'ngSanitize',
   'restangular',
   'decoControllers',
   'decoServices',
@@ -29,6 +30,10 @@ decoApp.config(function($routeProvider, $locationProvider) {
   $routeProvider.when('/published_daily_reports/:username/:date', {
     templateUrl : 'partials/daily_report.html',
     controller : 'DailyReportCtrl'
+  });
+  $routeProvider.when('/report_list', {
+    templateUrl : 'partials/report_list.html',
+    controller : 'ReportListCtrl'
   });
   $routeProvider.otherwise({
     redirectTo : '/home'
