@@ -204,8 +204,6 @@ decoControllers.controller('ReportListCtrl', function($scope, Restangular, $loca
     });
 
     $scope.fetchReports = function () {
-        console.log($scope.user);
-        console.log($scope.period);
         Restangular.all('published_daily_reports').getList({userid: $scope.user.id, period:$scope.period}).then(function(data){
             var len = data.length, i;
             for(i=0;i<len;i++) {
