@@ -94,7 +94,7 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
 
-    var weekday=new Array(7), urlPrefix;
+    var weekday=new Array(7), urlPrefix, locationChangeStartEvent;
     weekday[0]="Sun";
     weekday[1]="Mon";
     weekday[2]="Tue";
@@ -134,6 +134,22 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
 
     Restangular.one(urlPrefix,$routeParams.date).get().then(function(data){
         $scope.report = data;
+        if(data.status != "Published") {
+            window.onbeforeunload = function(){
+                var message = 'Unsaved changes will be lost!';
+                if (typeof event == 'undefined') {
+                    event = window.event;
+                }
+                if (event) {
+                    event.returnValue = message;
+                }
+                return message;
+            };
+            locationChangeStartEvent = $scope.$on('$locationChangeStart', function(event, next, current) {
+                Restangular.all('my_daily_reports').post($scope.report);
+                window.onbeforeunload = undefined;
+            });
+        }
     }, function(response) {
         if (response.status == 404) {
             $("#preview").html('<span class="label label-default">Not published yet</span>');
@@ -166,25 +182,12 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
     $scope.publish = function() {
         Restangular.all('my_daily_reports').post($scope.report, {publish:true}).then(function(){
             $scope.report.status = "Published";
+            window.onbeforeunload = undefined;
+            locationChangeStartEvent();
         });
     };
     $scope.back = function() {
         $location.path("/home");
     };
 
-    window.onbeforeunload = function(){
-        var message = 'Unsaved changes will be lost!';
-        if (typeof event == 'undefined') {
-            event = window.event;
-        }
-        if (event) {
-            event.returnValue = message;
-        }
-        return message;
-    };
-
-    $scope.$on('$locationChangeStart', function(event, next, current) {
-        Restangular.all('my_daily_reports').post($scope.report);
-        window.onbeforeunload = undefined;
-    });
 });
