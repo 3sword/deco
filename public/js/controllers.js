@@ -133,7 +133,9 @@ decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $loc
     }
 
     Restangular.one(urlPrefix,$routeParams.date).get().then(function(data){
+        $("#preview").hide();
         $scope.report = data;
+        $("#preview").fadeIn();
         if(data.status != "Published") {
             window.onbeforeunload = function(){
                 var message = 'Unsaved changes will be lost!';
