@@ -9,6 +9,7 @@ gem "pg"
 gem "activerecord"
 gem "sinatra-activerecord"
 gem "bcrypt-ruby"
+gem "thin"
 
 group :development do
     gem "shotgun"
