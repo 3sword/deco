@@ -13,16 +13,18 @@ Also, some front end libraries is used, we use [`nodejs`](http://nodejs.org/), p
 After finish installation. then we need to install some useful tools:
 
 ~~~bash
-$ bundle install
+$ bundle install --without production
 $ npm install -g bower grunt-cli
 $ npm install
 ~~~
+
+**Notice**: we use PostgreSQL as production DB, and use sqlite3 as development DB.
 
 ### Build Deco
 
 build front end:
 
-~~~
+~~~bash
 $ bower install
 $ grunt build
 ~~~
