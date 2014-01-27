@@ -1,4 +1,4 @@
-# deco
+# DECO
 
 Deep Cooperation
 
@@ -6,7 +6,7 @@ Deep Cooperation
 
 ### Requirement
 
-**Deco** is mainly build with [`ruby`](https://www.ruby-lang.org/), we use `2.0.0`, so you need to [install](https://www.ruby-lang.org/en/downloads/) it first.
+**DECO** is mainly build with [`ruby`](https://www.ruby-lang.org/), we use `2.0.0`, so you need to [install](https://www.ruby-lang.org/en/downloads/) it first.
 
 Also, some front end libraries is used, we use [`nodejs`](http://nodejs.org/), please also [install](http://nodejs.org/download/) it.
 
@@ -20,25 +20,75 @@ $ npm install
 
 **Notice**: we use PostgreSQL as production DB, and use sqlite3 as development DB.
 
-### Build Deco
+### Build DECO
 
-build front end:
+**Build front end:**
 
 ~~~bash
 $ bower install
 $ grunt build
 ~~~
+or for short:
+~~~bash
+$ sh buildfront.sh
+~~~
 
-run backend:
+#### Development mode
+
+**Setup database:**
 
 ~~~bash
 $ rake db:migrate
+~~~
+
+**Run web server:**
+
+~~~bash
 $ rackup
 ~~~
 
 If you want to auto reload all contents for every request:
 
 ~~~bash
-gem install shotgun
-shotgun config.ru
+$ shotgun config.ru
+~~~
+
+#### Production mode
+
+**At first:**
+
+~~~bash
+$ bundle install #you can use '--without development' to skip development gems
+~~~
+
+**Setup database:**
+
+In `config/environments.rb`, you can find:
+
+~~~ruby
+configure :production do
+    set :database, "postgres://postgres:postgres@localhost/deco"
+end
+~~~
+
+In this case you need a Postgresql server with username `postgres` and password `postgres`, then create a database named "deco" in this Postgresql server. You may also modify this connection string to adjust to your environment.
+
+**Then:**
+
+~~~bash
+$ RACK_ENV=production rake db:migrate
+~~~
+
+**Run web server:**
+
+You have many choices to run deco with a production server. Here is an easy way using [Thin](http://code.macournoyer.com/thin/):
+
+~~~bash
+$ thin start -e production -d #port will be 3000 by default, you can check thin usage to change it
+~~~
+
+The pid and log files will be created under `tmp` and `log` directories. To stop the Thin server:
+
+~~~bash
+$ thin stop
 ~~~
