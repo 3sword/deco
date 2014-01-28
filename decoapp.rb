@@ -97,19 +97,20 @@ class DecoApp < Sinatra::Application
             if params[:period].nil?
                 reports = reports.updated_today.order('updated_at DESC')
             else
+                now = Time.now
                 case params[:period]
                 when "tweek"
-                    from = Time.now.beginning_of_week
-                    to = Time.now.end_of_week
+                    from = now.beginning_of_week
+                    to = now.end_of_week
                 when "lweek"
-                    from = Time.now.beginning_of_week.weeks_ago(1)
-                    to = Time.now.end_of_week.weeks_ago(1)
+                    from = now.beginning_of_week.weeks_ago(1)
+                    to = now.end_of_week.weeks_ago(1)
                 when "tmonth"
-                    from = Time.now.beginning_of_month
-                    to = Time.now.end_of_month
+                    from = now.beginning_of_month
+                    to = now.end_of_month
                 when "lmonth"
-                    from = Time.now.beginning_of_month.months_ago(1)
-                    to = Time.now.end_of_month.months_ago(1)
+                    from = now.beginning_of_month.months_ago(1)
+                    to = now.end_of_month.months_ago(1)
                 end
                 reports = reports.where(:date => from..to).order('date')
             end
