@@ -7,6 +7,7 @@ var decoApp = angular.module('decoApp',[
   'restangular',
   'decoControllers',
   'decoServices',
+  'decoDirectives',
   'decoFilters'
   ]);
 

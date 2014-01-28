@@ -82,6 +82,20 @@ class DecoApp < Sinatra::Application
             User.all.to_json(:except => :encrypted_password)
         end
 
+        post "/users" do
+            halt 403 if @json["id"] != session[:user][:id]
+            user = User.find(@json["id"])
+            if @json["newpassword"]
+                halt 403 if user.password != @json["password"]
+                user.password = @json["newpassword"]
+            end
+            @json.delete("password")
+            @json.delete("newpassword")
+            user.assign_attributes(@json)
+            user.save!
+            user.to_json(:except => :encrypted_password)
+        end
+
         get "/published_daily_reports/:username/:date" do
             report = User.find_by(name: params[:username]).daily_reports.published.find_by(date: params[:date])
             if report.nil?

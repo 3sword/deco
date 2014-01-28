@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219150251) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20140128052807) do
 
   create_table "daily_reports", force: true do |t|
     t.integer  "user_id"
@@ -30,8 +27,9 @@ ActiveRecord::Schema.define(version: 20131219150251) do
     t.string   "encrypted_password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
-  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+  add_index "users", ["name"], name: "index_users_on_name", unique: true
 
 end

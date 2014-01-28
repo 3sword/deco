@@ -69,7 +69,32 @@ decoControllers.controller('HeadCtrl', function($scope, Restangular, Authenticat
 });
 
 decoControllers.controller('UserCtrl', function($scope, Restangular, $location, AuthenticationService) {
-    $scope.user = AuthenticationService.getUser();
+    $scope.user = $.extend(true, {}, AuthenticationService.getUser());
+    $scope.updateUser = function() {
+        $('#update-user-btn').css('opacity',0);
+        Restangular.all('users').post($scope.user).then(function(data){
+            AuthenticationService.setUser(data);
+            $('#update-user-btn').animate({opacity:1}, 1000);
+        });
+    }
+    $scope.resetPassword = function() {
+        $('#reset-pass-btn').css('opacity',0);
+        var data = {'id': $scope.user.id,
+                    'password': $scope.password,
+                    'newpassword': $scope.newPassword};
+        Restangular.all('users').post(data).then(function(data){
+            $('#password').removeClass("has-error");
+            $scope.password = "";
+            $scope.newPassword = "";
+            $scope.confirmPassword = "";
+            $('#reset-pass-btn').animate({opacity:1}, 1000);
+        }, function(response){
+            if (response.status == 403) {
+                $('#password').addClass("has-error");
+                $('#reset-pass-btn').animate({opacity:1}, 1000);
+            }
+        });
+    }
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
