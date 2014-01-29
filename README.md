@@ -92,3 +92,22 @@ The pid and log files will be created under `tmp` and `log` directories. To stop
 ~~~bash
 $ thin stop
 ~~~
+
+### Tips
+
+~~~bash
+$ shotgun config.ru
+~~~
+is very useful when developing, after you save some modification on the code, just refresh the webpage, all changes will be applied.
+
+~~~bash
+% irb
+2.0.0p353 :001 > require './decoapp.rb'
+ => true 
+2.0.0p353 :002 > 
+~~~
+This command will open interactive mode, you can then input some ruby statements like:
+~~~bash
+2.0.0p353 :002 > User.all
+~~~
+to execute some ruby codes, you can also do this when `shotgun` is running, using this to change some data and refresh the page, or check something after click some buttons on the web page, it is so easy.
