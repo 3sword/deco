@@ -101,7 +101,7 @@ $ shotgun config.ru
 is very useful when developing, after you save some modification on the code, just refresh the webpage, all changes will be applied.
 
 ~~~bash
-% irb
+$ irb
 2.0.0p353 :001 > require './decoapp.rb'
  => true 
 2.0.0p353 :002 > 
