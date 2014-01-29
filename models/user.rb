@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
     include BCrypt
 
     has_many :daily_reports
+    has_many :users_groups, dependent: :destroy
+    has_many :groups, through: :users_groups
 
     has_many :watchings_to, :foreign_key => 'user_id', :class_name => 'Watching'
     has_many :watchings_from, :foreign_key => 'watching_id', :class_name => 'Watching'

@@ -6,6 +6,8 @@ require "./config/environments"
 require "./models/user"
 require "./models/daily_report"
 require "./models/watching"
+require "./models/group"
+require "./models/users_group"
 
 
 class SendMailWorker
@@ -236,6 +238,38 @@ class DecoApp < Sinatra::Application
             user = User.find(session[:user][:id])
             watching = Watching.find_by(:user_id => user.id, :watching_id => params[:user_id])
             watching.destroy
+        end
+
+        get "/groups" do
+            user = User.find(session[:user][:id])
+            if user.nil?
+                halt 403
+            end
+            groups = user.groups
+            groups.to_json
+        end
+
+        post "/groups" do
+            name = @json["name"]
+            owner = session[:user][:id]
+            Group.create(name: name, owner_id: owner)
+            status 200
+        end
+
+        get "/groups/:group" do
+            group = Group.find_by(name: params[:group])
+
+            puts group
+            group.users.to_json
+        end
+
+        post "/groups/:group" do
+            userId = session[:user][:id]
+            group = Group.find_by(name: params[:group])
+
+            puts "add user", userId, "to group", group
+            UsersGroup.create(user_id: userId, group_id: group.id)
+
             status 200
         end
     end
