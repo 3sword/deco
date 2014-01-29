@@ -1,10 +1,27 @@
 <div class="container">
-<h2>
-    <a href="#/my_daily_reports/{{todaysReport.date}}">Today's report</a>
-    <span class="label label-default">{{todaysReport.status}}</span>
-    <a href="#/report_list" class="pull-right">Report List</a>
-</h2>
-<div class="well news-board">
-    <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}</a></p>
-</div>
+    <h2>
+        <a href="#/my_daily_reports/{{todaysReport.date}}">Today's report</a>
+        <span class="label label-default">{{todaysReport.status}}</span>
+        <a href="#/report_list" class="pull-right">Report List</a>
+    </h2>
+
+    <div class="news-board">
+        <div class="row">
+            <button type="button" class="btn btn-default btn-sm pull-right on-well" ng-click="flip()">
+                <span class="glyphicon glyphicon-eye-open"></span> Watching
+            </button>
+        </div>
+        <div id="card" class="card">
+            <div class="front">
+                <div class="well">
+            <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}</a></p>
+        </div>
+            </div>
+            <div class="back">
+              <div class="well">
+            back
+        </div>
+          </div>
+      </div>
+  </div>
 </div>

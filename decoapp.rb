@@ -56,7 +56,7 @@ class DecoApp < Sinatra::Application
                 status 410
             elsif user.password == @json["password"]
                 session[:user] = {:id => user.id, :name => user.name}
-                user.to_json(:except => :encrypted_password)
+                user.to_json(:except => :encrypted_password, :include => :user_groups)
             else
                 status 401
             end

@@ -119,6 +119,12 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
         }
     }
 
+
+    var card = $("#card");
+    $scope.flip = function() {
+        card.toggleClass("flip");
+    }
+
 });
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
