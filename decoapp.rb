@@ -259,7 +259,6 @@ class DecoApp < Sinatra::Application
         get "/groups/:group" do
             group = Group.find_by(name: params[:group])
 
-            puts group
             group.users.to_json
         end
 
@@ -270,7 +269,19 @@ class DecoApp < Sinatra::Application
             puts "add user", userId, "to group", group
             UsersGroup.create(user_id: userId, group_id: group.id)
 
-            status 200
+            status 200 
+        end
+
+        get "/groups/:group/today" do
+            group = Group.find_by(name: params[:group])
+            published_users = Array.new
+
+            group.users.each {|user|
+                today_report = user.daily_reports.updated_today.published
+                published_users.push(user.realname) unless today_report.empty?
+            }
+
+            published_users.to_json
         end
     end
 
