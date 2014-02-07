@@ -16,6 +16,7 @@ module.exports = function(grunt) {
               'angular-route/angular-route.js', 'angular-route/angular-route.min.js.map',
               'angular-cookies/angular-cookies.js', 'angular-cookies/angular-cookies.min.js.map',
               'angular-sanitize/angular-sanitize.js', 'angular-sanitize/angular-sanitize.min.js.map',
+              'angular-strap/dist/angular-strap.js',
               'underscore/underscore.js', 'underscore/underscore.min.js.map',
               'underscore.string/dist/underscore.string.min.js',
               'restangular/dist/restangular.js', 'markdown/lib/markdown.js',
@@ -28,7 +29,7 @@ module.exports = function(grunt) {
             cwd: 'bower_components/',
             flatten: true,
             src: [
-              'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/css/bootstrap-theme.css'
+              'bootstrap/dist/css/bootstrap.css', 'bootstrap/dist/css/bootstrap-theme.css', 'font-awesome/css/font-awesome.css'
             ],
             dest: 'public/css/'
           },
@@ -37,7 +38,8 @@ module.exports = function(grunt) {
             cwd: 'bower_components/',
             flatten: true,
             src: [
-              'bootstrap/dist/fonts/*'
+              'bootstrap/dist/fonts/*',
+              'font-awesome/fonts/*'
             ],
             dest: 'public/fonts/'
           }

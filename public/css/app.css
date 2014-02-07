@@ -56,3 +56,12 @@ h2 a.subtitle {
 .btn-logout {
   text-decoration: none;
 }
+
+.on-well {
+  margin-right: 15px;
+  margin-bottom: 5px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

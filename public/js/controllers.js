@@ -119,6 +119,8 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
         }
     }
 
+    $scope.watchedUsers = [{name:"liu", watched:true}, {name:"yang", watched:false}];
+
 });
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {

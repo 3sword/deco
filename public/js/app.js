@@ -8,7 +8,8 @@ var decoApp = angular.module('decoApp',[
   'decoControllers',
   'decoServices',
   'decoDirectives',
-  'decoFilters'
+  'decoFilters',
+  'mgcrea.ngStrap'
   ]);
 
 decoApp.config(function($routeProvider, $locationProvider) {

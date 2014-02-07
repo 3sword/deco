@@ -4,7 +4,17 @@
     <span class="label label-default">{{todaysReport.status}}</span>
     <a href="#/report_list" class="pull-right">Report List</a>
 </h2>
-<div class="well news-board">
-    <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}</a></p>
+
+<div class="news-board">
+
+    <div class="row">
+        <button type="button" class="btn btn-default btn-sm pull-right on-well" data-template="partials/watchlist.html" data-placement="bottom" bs-popover>
+            <i class="fa fa-eye"></i> Watching
+        </button>
+    </div>
+
+    <div class="well">
+        <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}</a></p>
+    </div>
 </div>
 </div>

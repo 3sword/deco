@@ -1,0 +1,12 @@
+<div class="popover">
+  <div class="arrow"></div>
+  <div class="popover-content">
+    <table class="table table-condensed">
+      <tr ng-repeat="user in watchedUsers">
+        <td>{{user.name}}</td>
+        <td><i class="fa cursor-pointer" ng-class="{'fa-envelope': user.watched, 'fa-envelope-o': !user.watched}" ng-click="user.watched = !user.watched;"></i></td>
+        <td><i class="fa fa-times cursor-pointer"></i></td>
+      </tr>
+    </table>
+  </div>
+</div>
