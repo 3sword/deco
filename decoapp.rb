@@ -246,7 +246,7 @@ class DecoApp < Sinatra::Application
                 halt 403
             end
             groups = user.groups
-            groups.to_json
+            groups.to_json(:only => [:name])
         end
 
         post "/groups" do
@@ -259,7 +259,7 @@ class DecoApp < Sinatra::Application
         get "/groups/:group" do
             group = Group.find_by(name: params[:group])
 
-            group.users.to_json
+            group.users.to_json(:only => [:id, :name])
         end
 
         post "/groups/:group" do
@@ -276,12 +276,17 @@ class DecoApp < Sinatra::Application
             group = Group.find_by(name: params[:group])
             published_users = Array.new
 
-            group.users.each {|user|
+            reports = group.users.map do |user|
                 today_report = user.daily_reports.updated_today.published
-                published_users.push(user.realname) unless today_report.empty?
-            }
 
-            published_users.to_json
+                report = { :name => user.name }
+                report[:published] = !today_report.empty?
+                report[:time] = today_report[0].created_at unless today_report.empty?
+
+                report
+            end
+
+            reports.to_json
         end
     end
 
