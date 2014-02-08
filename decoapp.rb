@@ -259,17 +259,40 @@ class DecoApp < Sinatra::Application
         get "/groups/:group" do
             group = Group.find_by(name: params[:group])
 
-            group.users.to_json(:only => [:id, :name])
+            {
+                :name => group.name,
+                :owner => User.find(group.owner_id).name,
+                :created_at => group.created_at
+            }.to_json
         end
 
         post "/groups/:group" do
-            userId = session[:user][:id]
-            group = Group.find_by(name: params[:group])
+            name = @json["name"]
+            owner = @json["owner"]
 
-            puts "add user", userId, "to group", group
-            UsersGroup.create(user_id: userId, group_id: group.id)
+            group = Group.find_by(name: params[:group])
+            user = User.find_by(name: owner)
+
+            group.name = name unless name.nil?
+            group.owner_id = user.id unless user.nil?
 
             status 200 
+        end
+
+        get "/groups/:group/users" do
+            group = Group.find_by(name: params[:group])
+
+            group.users.to_json(:only => [:name])
+        end
+
+        post "/groups/:group/users" do
+            name = @json["name"]
+            group = Group.find_by(name: params[:group])
+            user = User.find_by(name: name)
+
+            UsersGroup.create(user_id: user.id, group_id: group.id) unless user.nil?
+
+            status 200
         end
 
         get "/groups/:group/today" do
