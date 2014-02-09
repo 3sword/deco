@@ -169,6 +169,10 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
     }
 });
 
+decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
+
+});
+
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
 
     var weekday=new Array(7), urlPrefix, locationChangeStartEvent;
