@@ -1,11 +1,11 @@
 <div class="container">
-<h2>
-    <a href="#/my_daily_reports/{{todaysReport.date}}">Today's report</a>
-    <span class="label label-default">{{todaysReport.status}}</span>
-    <a href="#/report_list" class="pull-right">Report List</a>
-</h2>
+    <h2>
+        <a href="#/my_daily_reports/{{todaysReport.date}}">Today's report</a>
+        <span class="label label-default">{{todaysReport.status}}</span>
+        <a href="#/report_list" class="pull-right">Report List</a>
+    </h2>
 
-<div class="news-board">
+    <div class="news-board">
         <div class="btn-group">
             <button type="button" class="btn btn-default btn-sm pull-right on-well" ng-click="showBlock=!showBlock">
                 <i class="fa fa-eye"></i> Watching
@@ -20,17 +20,45 @@
                         <i class="fa cursor-pointer fa-envelope-o" ng-if="!user.mailing" ng-click="toggleMailing(user)" ng-visible="hover"></i>
                     </td>
                     <td><i class="fa fa-times cursor-pointer text-danger" ng-visible="hover" ng-click="unwatchUser(user)"></i></td>
-                  </tr>
-                </table>
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Add user" ng-model="targetUser" typeahead="user.realname for user in unwatchedUsers | filter:$viewValue | limitTo:8" typeahead-on-select="watchUser($item, $model, $label)">
-                </div>
-              </div>
+                </tr>
+            </table>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add user" ng-model="targetUser" typeahead="user.realname for user in unwatchedUsers | filter:$viewValue | limitTo:8" typeahead-on-select="watchUser($item, $model, $label)">
             </div>
         </div>
+    </div>
 
     <div class="well">
-        <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}</a></p>
+        <p ng-repeat="report in publishedReports">
+            <a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}
+            </a>
+        </p>
     </div>
-</div>
+
+    <div ng-repeat="group in groups" class="row group-section">
+        <h2 class="group-name">{{group.name}}</h2>
+        <div class="user-list">
+            <ul class="media-list">
+                <li ng-repeat="user in group.users" class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" data-src="user_icon.png" alt="{{user.name}}">
+                    </a>
+                    <div ng-if="user.published" class="media-body">
+                        <div class="media-heading">
+                            <h4>{{user.name}}</h4>
+                        </div>
+                        <p> 
+                            <a href="#/published_daily_reports/{{user.name}}/{{user.time | date:'yyyy-MM-dd'}}">
+                                Created at {{user.time | date:'shortTime'}}
+                            </a>
+                        </p>
+                    </div>
+                    <div ng-if="!user.published" class="media-body">
+                        <h5 class="media-heading"> Not published yet </h5>
+                        <p> Nothing </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>

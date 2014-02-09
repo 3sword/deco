@@ -120,13 +120,24 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
         $scope.unwatchedUsers = data.unwatched;
     });
 
-    function convertDateDescription(date) {
-        if (date == today) {
-            return "today's report";
-        } else {
-            return "report of " + date;
+    var groups = [];
+    Restangular.all('groups').getList().then(function(groupList) {
+        function addGroup(name) {
+            return function(data) {
+                groups.push({
+                    name: name,
+                    users: data
+                });
+            }
         }
-    }
+
+        for (var i = 0; i < groupList.length; i++) {
+            var groupName = groupList[i].name;
+            Restangular.one('groups', groupName).one('today').get().then(addGroup(groupName));
+        }
+    });
+
+    $scope.groups = groups;
 
     $scope.watchUser = function($user, $model, $label) {
         Restangular.all('my_watchings').post($user).then(function(data){
@@ -156,7 +167,6 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
             user.mailing = !user.mailing;
         });
     }
-
 });
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {
