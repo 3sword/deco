@@ -16,8 +16,11 @@
                 <table class="table table-condensed">
                   <tr ng-repeat="user in watchedUsers" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
                     <td>{{user.name}}</td>
-                    <td><i class="fa cursor-pointer" ng-class="{'fa-envelope': user.mailing, 'fa-envelope-o': !user.mailing, invisible:!hover && !user.mailing}" ng-click="user.mailing = !user.mailing;"></i></td>
-                    <td><i class="fa fa-times cursor-pointer" ng-class="{invisible:!hover}" ng-click="unwatchUser(user)"></i></td>
+                    <td>
+                        <i class="fa cursor-pointer fa-envelope" ng-if="user.mailing" ng-click="user.mailing = !user.mailing;"></i>
+                        <i class="fa cursor-pointer fa-envelope-o" ng-if="!user.mailing" ng-click="user.mailing = !user.mailing;" ng-visible="hover"></i>
+                    </td>
+                    <td><i class="fa fa-times cursor-pointer" ng-visible="hover" ng-click="unwatchUser(user)"></i></td>
                   </tr>
                 </table>
                 <div class="input-group">
