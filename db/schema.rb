@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128052807) do
+ActiveRecord::Schema.define(version: 20140210061629) do
 
   create_table "daily_reports", force: true do |t|
     t.integer  "user_id"
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(version: 20140128052807) do
     t.datetime "updated_at"
     t.text     "content"
   end
+
+  create_table "user_group_members", force: true do |t|
+    t.integer  "user_group_id"
+    t.integer  "user_id"
+    t.integer  "role",          default: 1, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_groups", force: true do |t|
+    t.string   "name"
+    t.integer  "status",     default: 2, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_groups", ["name"], name: "index_user_groups_on_name"
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -31,5 +48,10 @@ ActiveRecord::Schema.define(version: 20140128052807) do
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true
+
+  create_table "watchings", force: true do |t|
+    t.integer "user_id",     null: false
+    t.integer "watching_id", null: false
+  end
 
 end

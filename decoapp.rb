@@ -4,6 +4,7 @@ require "sinatra/activerecord"
 require "./config/environments"
 require "./models/user"
 require "./models/daily_report"
+require "./models/watching"
 
 class DecoApp < Sinatra::Application
     register Sinatra::Namespace
