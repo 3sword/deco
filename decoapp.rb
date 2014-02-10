@@ -10,7 +10,7 @@ require "./models/watching"
 
 class SendMailWorker
     include Sidekiq::Worker
-
+    sidekiq_options :queue => :deco
     def perform(recipients, subject_content, body_content)
         Mail.deliver do
             from 'deco@hr-server.cn.workslan'
