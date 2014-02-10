@@ -8,5 +8,8 @@
         <td><i class="fa fa-times cursor-pointer"></i></td>
       </tr>
     </table>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Add user" ng-model="targetUser" ng-options="user as user.name for user in watchedUsers" bs-typeahead typeahead-updated="watchUser()">
+    </div>
   </div>
 </div>

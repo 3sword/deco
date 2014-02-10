@@ -9,7 +9,7 @@ var decoApp = angular.module('decoApp',[
   'decoServices',
   'decoDirectives',
   'decoFilters',
-  'mgcrea.ngStrap'
+  'ui.bootstrap'
   ]);
 
 decoApp.config(function($routeProvider, $locationProvider) {

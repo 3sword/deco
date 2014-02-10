@@ -1,7 +1,7 @@
 body {
   padding-top: 60px;
 }
-
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .form-signin {
   max-width: 330px;
@@ -64,4 +64,11 @@ h2 a.subtitle {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+
+.news-board .popover {
+  top:100%;
+  display: block;
+  min-width: 200px;
 }

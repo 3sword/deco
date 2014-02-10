@@ -119,7 +119,18 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
         }
     }
 
-    $scope.watchedUsers = [{name:"liu", watched:true}, {name:"yang", watched:false}];
+    $scope.watchedUsers = [{name:"liu", mailing:true}, {name:"yang", mailing:false}];
+    $scope.unwatchedUsers = [{name:"lu", realname:"路"}, {name:"shen", realname:"沈"}];
+
+    $scope.watchUser = function($user, $model, $label) {
+        $scope.watchedUsers.push($user);
+        $scope.unwatchedUsers.splice(0,1);
+        $scope.targetUser = "";
+    }
+
+    $scope.unwatchUser = function(user) {
+        $scope.watchedUsers.splice(0,1);
+    }
 
 });
 

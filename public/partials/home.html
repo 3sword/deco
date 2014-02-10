@@ -6,12 +6,26 @@
 </h2>
 
 <div class="news-board">
-
-    <div class="row">
-        <button type="button" class="btn btn-default btn-sm pull-right on-well" data-template="partials/watchlist.html" data-placement="bottom" bs-popover>
-            <i class="fa fa-eye"></i> Watching
-        </button>
-    </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm pull-right on-well" ng-click="showBlock=!showBlock">
+                <i class="fa fa-eye"></i> Watching
+            </button>
+            <div class="popover" ng-show="showBlock">
+              <div class="arrow"></div>
+              <div class="popover-content">
+                <table class="table table-condensed">
+                  <tr ng-repeat="user in watchedUsers" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+                    <td>{{user.name}}</td>
+                    <td><i class="fa cursor-pointer" ng-class="{'fa-envelope': user.mailing, 'fa-envelope-o': !user.mailing, invisible:!hover && !user.mailing}" ng-click="user.mailing = !user.mailing;"></i></td>
+                    <td><i class="fa fa-times cursor-pointer" ng-class="{invisible:!hover}" ng-click="unwatchUser(user)"></i></td>
+                  </tr>
+                </table>
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Add user" ng-model="targetUser" typeahead="user.realname for user in unwatchedUsers | filter:$viewValue | limitTo:8" typeahead-on-select="watchUser($item, $model, $label)">
+                </div>
+              </div>
+            </div>
+        </div>
 
     <div class="well">
         <p ng-repeat="report in publishedReports"><a href="#/published_daily_reports/{{report.user.name}}/{{report.date}}">{{report.user.realname}} published {{report.dateDescription}} at {{report.updated_at | date:'shortTime'}}</a></p>
