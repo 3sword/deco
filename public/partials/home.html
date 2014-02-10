@@ -16,8 +16,8 @@
                   <tr ng-repeat="user in watchedUsers" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
                     <td>{{user.name}}</td>
                     <td>
-                        <i class="fa cursor-pointer fa-envelope" ng-if="user.mailing" ng-click="user.mailing = !user.mailing;"></i>
-                        <i class="fa cursor-pointer fa-envelope-o" ng-if="!user.mailing" ng-click="user.mailing = !user.mailing;" ng-visible="hover"></i>
+                        <i class="fa cursor-pointer fa-envelope" ng-if="user.mailing" ng-click="toggleMailing(user)"></i>
+                        <i class="fa cursor-pointer fa-envelope-o" ng-if="!user.mailing" ng-click="toggleMailing(user)" ng-visible="hover"></i>
                     </td>
                     <td><i class="fa fa-times cursor-pointer" ng-visible="hover" ng-click="unwatchUser(user)"></i></td>
                   </tr>

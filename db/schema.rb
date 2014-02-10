@@ -21,23 +21,6 @@ ActiveRecord::Schema.define(version: 20140210061629) do
     t.text     "content"
   end
 
-  create_table "user_group_members", force: true do |t|
-    t.integer  "user_group_id"
-    t.integer  "user_id"
-    t.integer  "role",          default: 1, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "user_groups", force: true do |t|
-    t.string   "name"
-    t.integer  "status",     default: 2, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_groups", ["name"], name: "index_user_groups_on_name"
-
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "realname"
@@ -50,8 +33,9 @@ ActiveRecord::Schema.define(version: 20140210061629) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true
 
   create_table "watchings", force: true do |t|
-    t.integer "user_id",     null: false
-    t.integer "watching_id", null: false
+    t.integer "user_id",                     null: false
+    t.integer "watching_id",                 null: false
+    t.boolean "mailing",     default: false
   end
 
 end

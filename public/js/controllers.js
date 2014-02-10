@@ -111,6 +111,11 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
         });
     });
 
+    Restangular.one('my_watchings').get().then(function(data){
+        $scope.watchedUsers = data.watched;
+        $scope.unwatchedUsers = data.unwatched;
+    });
+
     function convertDateDescription(date) {
         if (date == today) {
             return "today's report";
@@ -118,9 +123,6 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
             return "report of " + date;
         }
     }
-
-    $scope.watchedUsers = [{name:"liu", mailing:true}, {name:"yang", mailing:false}];
-    $scope.unwatchedUsers = [{name:"lu", realname:"路"}, {name:"shen", realname:"沈"}];
 
     $scope.watchUser = function($user, $model, $label) {
         $scope.watchedUsers.push($user);
@@ -130,6 +132,12 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
 
     $scope.unwatchUser = function(user) {
         $scope.watchedUsers.splice(0,1);
+    }
+
+    $scope.toggleMailing = function(user) {
+        Restangular.one('my_watchings',user.id).put().then(function(data){
+            user.mailing = !user.mailing;
+        });
     }
 
 });

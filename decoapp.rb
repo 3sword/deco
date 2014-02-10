@@ -158,7 +158,8 @@ class DecoApp < Sinatra::Application
                 status = "Draft"
             end
             date = @json["date"]
-            report = DailyReport.find_by(user_id: session[:user][:id], date: date)
+            user = User.find(session[:user][:id])
+            report = user.daily_reports.find_by(date: date)
             if report.nil?
                 report = DailyReport.new(@json)
                 report.status = status
@@ -170,8 +171,43 @@ class DecoApp < Sinatra::Application
                 report.assign_attributes(@json)
                 report.status = status
                 report.save
+                #sendmail
+                if status == "Published"
+                    recipients = user.watchings_from.mailing.map do |watching|
+                        watching.user.email
+                    end
+                    Mail.deliver do
+                        from 'deco@hr-server.cn.workslan'
+                        to recipients
+                        subject '#{user.realname} published report of #{report.date}'
+                        body report.content
+                    end
+                end
                 report.to_json
             end
+        end
+
+        get "/my_watchings" do
+            user = User.find(session[:user][:id])
+            result = Hash.new
+            result["watched"] = user.watchings_to.map{ |item|
+                user_hash = item.watching.serializable_hash(:except => :encrypted_password)
+                user_hash["mailing"] = item.mailing
+                user_hash
+            }
+            result["unwatched"] = (User.all - user.watching - [user]).map { |item|
+                item.serializable_hash(:except => :encrypted_password)
+            }
+            result.to_json
+        end
+
+        #toggle mailing
+        put "/my_watchings/:user_id" do
+            user = User.find(session[:user][:id])
+            watching = user.watchings_to.find_by(:watching_id => params[:user_id])
+            watching.mailing = !watching.mailing
+            watching.save
+            status 200
         end
     end
 
