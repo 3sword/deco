@@ -14,7 +14,7 @@
               <div class="popover-content">
                 <table class="table table-condensed">
                   <tr ng-repeat="user in watchedUsers" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-                    <td>{{user.name}}</td>
+                    <td>{{user.realname}}</td>
                     <td>
                         <i class="fa cursor-pointer fa-envelope" ng-if="user.mailing" ng-click="toggleMailing(user)"></i>
                         <i class="fa cursor-pointer fa-envelope-o" ng-if="!user.mailing" ng-click="toggleMailing(user)" ng-visible="hover"></i>
