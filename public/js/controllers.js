@@ -99,17 +99,21 @@ decoControllers.controller('UserCtrl', function($scope, Restangular, $location, 
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
     var today;
-    Restangular.one('my_daily_reports','today').get().then(function(data){
-        $scope.todaysReport = data;
-        today = data.date;
-        Restangular.all('published_daily_reports').getList().then(function(data){
-            var len = data.length, i;
-            for(i=0;i<len;i++) {
-                data[i].dateDescription = convertDateDescription(data[i].date);
-            }
-            $scope.publishedReports = data;
+
+    loadReports();
+    function loadReports(){
+        Restangular.one('my_daily_reports','today').get().then(function(data){
+            $scope.todaysReport = data;
+            today = data.date;
+            Restangular.all('published_daily_reports').getList().then(function(data){
+                var len = data.length, i;
+                for(i=0;i<len;i++) {
+                    data[i].dateDescription = convertDateDescription(data[i].date);
+                }
+                $scope.publishedReports = data;
+            });
         });
-    });
+    }
 
     Restangular.one('my_watchings').get().then(function(data){
         $scope.watchedUsers = data.watched;
@@ -132,6 +136,7 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
                 $scope.unwatchedUsers.splice(index, 1);
             }
             $scope.targetUser = "";
+            loadReports();
         });
     }
 
@@ -142,6 +147,7 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
             if (index > -1) {
                 $scope.watchedUsers.splice(index, 1);
             }
+            loadReports();
         });
     }
 

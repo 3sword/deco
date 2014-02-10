@@ -11,12 +11,12 @@ require "./models/watching"
 class SendMailWorker
     include Sidekiq::Worker
     sidekiq_options :queue => :deco
-    def perform(recipients, subject_content, body_content)
+    def perform(recipient, subject_content, body_content, username, date)
         Mail.deliver do
             from 'deco@hr-server.cn.workslan'
-            to recipients
+            to recipient
             subject subject_content
-            body body_content
+            body body_content + "\n\nView on DECO: http://hr-server.cn.workslan:3000/#/published_daily_reports/#{username}/#{date}"
         end
     end
 end
@@ -123,7 +123,7 @@ class DecoApp < Sinatra::Application
         end
 
         get "/published_daily_reports" do
-            reports = DailyReport.published
+            reports = DailyReport.published.watched_by(User.find(session[:user][:id]))
             reports = reports.where(:user_id => params[:userid]) unless params[:userid].nil?
             if params[:period].nil?
                 reports = reports.updated_today.order('updated_at DESC')
@@ -189,10 +189,10 @@ class DecoApp < Sinatra::Application
                 report.save
                 #sendmail
                 if status == "Published"
-                    recipients = user.watchings_from.mailing.map do |watching|
-                        watching.user.email
+                    user.watchings_from.mailing.each do |watching|
+                        addr = watching.user.email
+                        SendMailWorker.perform_async(addr, "#{user.realname} published report of #{report.date}", report.content, user.name, report.date) unless addr.empty?
                     end
-                    SendMailWorker.perform_async(recipients, "#{user.realname} published report of #{report.date}", report.content)
                 end
                 report.to_json
             end
