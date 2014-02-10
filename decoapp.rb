@@ -179,7 +179,7 @@ class DecoApp < Sinatra::Application
                     Mail.deliver do
                         from 'deco@hr-server.cn.workslan'
                         to recipients
-                        subject '#{user.realname} published report of #{report.date}'
+                        subject "#{user.realname} published report of #{report.date}"
                         body report.content
                     end
                 end
