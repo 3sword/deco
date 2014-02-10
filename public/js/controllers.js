@@ -125,13 +125,24 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
     }
 
     $scope.watchUser = function($user, $model, $label) {
-        $scope.watchedUsers.push($user);
-        $scope.unwatchedUsers.splice(0,1);
-        $scope.targetUser = "";
+        Restangular.all('my_watchings').post($user).then(function(data){
+            $scope.watchedUsers.push($user);
+            var index = $scope.unwatchedUsers.indexOf($user);
+            if (index > -1) {
+                $scope.unwatchedUsers.splice(index, 1);
+            }
+            $scope.targetUser = "";
+        });
     }
 
     $scope.unwatchUser = function(user) {
-        $scope.watchedUsers.splice(0,1);
+        Restangular.one('my_watchings',user.id).remove().then(function(data){
+            $scope.unwatchedUsers.push(user);
+            var index = $scope.watchedUsers.indexOf(user);
+            if (index > -1) {
+                $scope.watchedUsers.splice(index, 1);
+            }
+        });
     }
 
     $scope.toggleMailing = function(user) {

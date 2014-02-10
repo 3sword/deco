@@ -220,6 +220,24 @@ class DecoApp < Sinatra::Application
             watching.save
             status 200
         end
+
+        #add watching
+        post "/my_watchings" do
+            user = User.find(session[:user][:id])
+            watching = Watching.new
+            watching.user_id = user.id
+            watching.watching_id = @json["id"]
+            watching.save
+            status 200
+        end
+
+        #remove watching
+        delete "/my_watchings/:user_id" do
+            user = User.find(session[:user][:id])
+            watching = Watching.find_by(:user_id => user.id, :watching_id => params[:user_id])
+            watching.destroy
+            status 200
+        end
     end
 
 end
