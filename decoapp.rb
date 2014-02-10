@@ -1,12 +1,28 @@
 require "sinatra"
 require "sinatra/namespace"
 require "sinatra/activerecord"
+require "sidekiq"
 require "./config/environments"
 require "./models/user"
 require "./models/daily_report"
 require "./models/watching"
 
+
+class SendMailWorker
+    include Sidekiq::Worker
+
+    def perform(recipients, subject_content, body_content)
+        Mail.deliver do
+            from 'deco@hr-server.cn.workslan'
+            to recipients
+            subject subject_content
+            body body_content
+        end
+    end
+end
+
 class DecoApp < Sinatra::Application
+
     register Sinatra::Namespace
     set :index_page, File.read(File.join(settings.public_folder, 'deco.html'))
     set :daily_report_template, File.read("resources/daily_report_template.md")
@@ -176,12 +192,7 @@ class DecoApp < Sinatra::Application
                     recipients = user.watchings_from.mailing.map do |watching|
                         watching.user.email
                     end
-                    Mail.deliver do
-                        from 'deco@hr-server.cn.workslan'
-                        to recipients
-                        subject "#{user.realname} published report of #{report.date}"
-                        body report.content
-                    end
+                    SendMailWorker.perform_async(recipients, "#{user.realname} published report of #{report.date}", report.content)
                 end
                 report.to_json
             end
