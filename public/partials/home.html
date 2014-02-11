@@ -36,7 +36,7 @@
     </div>
 
     <div ng-repeat="group in groups" class="row group-section">
-        <h2 class="group-name">{{group.name}}</h2>
+        <h2 class="group-name"><a href="#/groups/{{group.name}}/settings">{{group.name}}</a></h2>
         <div class="user-list">
             <ul class="media-list">
                 <li ng-repeat="user in group.users" class="media">
