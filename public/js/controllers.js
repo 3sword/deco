@@ -169,8 +169,40 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
     }
 });
 
-decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
+decoControllers.controller('AddGroupCtrl', function($scope, Restangular, $location) {
+    $scope.addGroup = function() {
+        Restangular.all('groups').post({name: $scope.groupName}).then(function() {
+            $location.path('/home');
+        }, function() {
 
+        });
+    };
+});
+
+decoControllers.controller('GroupSettingsCtrl', function($scope, Restangular, $location, $routeParams) {
+    var groupName = $routeParams.group;
+
+    Restangular.one('groups', groupName).get().then(function(data) {
+        $scope.group = data;
+
+        Restangular.one('groups', groupName).getList('users').then(function(data) {
+            $scope.group.users = data;
+        })
+    });
+
+    $scope.addUser = function() {
+        if ($scope.userName && $scope.userName.length > 0) {
+            Restangular.one('groups', groupName).post('users', {name: $scope.userName}).then(function() {
+                $scope.group.users.push({name: $scope.userName});
+            });
+        }
+    };
+
+    $scope.deleteUser = function(index, name) {
+        Restangular.one('groups', groupName).one('users').remove({name: name}).then(function() {
+            $scope.group.users.splice(index, 1);
+        });
+    };
 });
 
 decoControllers.controller('DailyReportCtrl', function($scope, Restangular, $location, $routeParams, $filter) {

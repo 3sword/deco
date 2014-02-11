@@ -1,0 +1,28 @@
+<div class="container">
+	<form class="form-horizontal">
+		<fieldset>
+			<legend>{{group.name}}</legend>
+		</fieldset>
+		<fieldset>
+			<div class="form-group">
+				<div class="col-md-10">
+					<input ng-model="userName" type="text" class="form-control" id="add-user" placeholder="Add user to group">
+				</div>
+				<div class="col-md-2">
+					<button ng-click="addUser()" type="button" class="btn btn-success btn-block">Add</button>
+				</div>
+			</div>
+		</fieldset>
+	</form>
+	<div>
+		<h4 class="text-primary"><strong>{{group.users.length}}</strong> Members</h4>
+	</div>
+	<table class="table">
+		<tr ng-repeat="user in group.users" class="user">
+			<td class="col-md-10">{{user.name}}</td>
+			<td class="text-right col-md-2">
+				<button ng-click="deleteUser($index, user.name)" type="button" class="text-right btn btn-danger btn-sm">Delete</button>
+			</td>
+		</li>
+	</table>
+</div>

@@ -295,6 +295,21 @@ class DecoApp < Sinatra::Application
             status 200
         end
 
+        delete "/groups/:group/users" do
+            name = params[:name]
+            group = Group.find_by(name: params[:group])
+            user = User.find_by(name: name)
+
+            userGroup = UsersGroup.find_by(user_id: user.id, group_id: group.id)
+
+            if userGroup.nil?
+                halt 500
+            else
+                userGroup.destroy
+                status 200
+            end
+        end
+
         get "/groups/:group/today" do
             group = Group.find_by(name: params[:group])
             published_users = Array.new
