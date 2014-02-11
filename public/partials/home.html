@@ -13,7 +13,7 @@
             <div class="popover" ng-show="showBlock">
               <div class="popover-content">
                 <table class="table table-condensed">
-                  <tr ng-repeat="user in watchedUsers | orderBy:'realname'" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+                  <tr ng-repeat="user in watchedUsers | orderBy:'name'" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
                     <td>{{user.realname}}</td>
                     <td>
                         <i class="fa cursor-pointer fa-envelope text-primary" ng-if="user.mailing" ng-click="toggleMailing(user)"></i>
