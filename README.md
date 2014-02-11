@@ -18,7 +18,7 @@ $ npm install -g bower grunt-cli
 $ npm install
 ~~~
 
-**Notice**: we use PostgreSQL as production DB, and use sqlite3 as development DB.
+**Notice**: we use PostgreSQL as production DB, and use sqlite3 as development DB. Also, we use [Redis](http://redis.io/) as the requirement of [Sidekiq](http://sidekiq.org/) for background tasks.
 
 ### Build DECO
 
@@ -32,6 +32,20 @@ or for short:
 ~~~bash
 $ sh buildfront.sh
 ~~~
+
+**Set up Sidekiq for email sending tasks:**
+
+(You can skip this part if you do not use or work with related feature)
+
+Make sure you have Redis installed and its server running at default port.
+~~~bash
+$ sh sidekiq_start.sh
+~~~
+To stop:
+~~~bash
+$ sh sidekiq_stop.sh
+~~~
+You may need to create folders `log/` `tmp/pids/`
 
 #### Development mode
 
