@@ -99,16 +99,25 @@ decoControllers.controller('UserCtrl', function($scope, Restangular, $location, 
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
     var today;
-    Restangular.one('my_daily_reports','today').get().then(function(data){
-        $scope.todaysReport = data;
-        today = data.date;
-        Restangular.all('published_daily_reports').getList().then(function(data){
-            var len = data.length, i;
-            for(i=0;i<len;i++) {
-                data[i].dateDescription = convertDateDescription(data[i].date);
-            }
-            $scope.publishedReports = data;
+
+    loadReports();
+    function loadReports(){
+        Restangular.one('my_daily_reports','today').get().then(function(data){
+            $scope.todaysReport = data;
+            today = data.date;
+            Restangular.all('published_daily_reports').getList().then(function(data){
+                var len = data.length, i;
+                for(i=0;i<len;i++) {
+                    data[i].dateDescription = convertDateDescription(data[i].date);
+                }
+                $scope.publishedReports = data;
+            });
         });
+    }
+
+    Restangular.one('my_watchings').get().then(function(data){
+        $scope.watchedUsers = data.watched;
+        $scope.unwatchedUsers = data.unwatched;
     });
 
     function convertDateDescription(date) {
@@ -117,6 +126,35 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
         } else {
             return "report of " + date;
         }
+    }
+
+    $scope.watchUser = function($user, $model, $label) {
+        Restangular.all('my_watchings').post($user).then(function(data){
+            $scope.watchedUsers.push($user);
+            var index = $scope.unwatchedUsers.indexOf($user);
+            if (index > -1) {
+                $scope.unwatchedUsers.splice(index, 1);
+            }
+            $scope.targetUser = "";
+            loadReports();
+        });
+    }
+
+    $scope.unwatchUser = function(user) {
+        Restangular.one('my_watchings',user.id).remove().then(function(data){
+            $scope.unwatchedUsers.push(user);
+            var index = $scope.watchedUsers.indexOf(user);
+            if (index > -1) {
+                $scope.watchedUsers.splice(index, 1);
+            }
+            loadReports();
+        });
+    }
+
+    $scope.toggleMailing = function(user) {
+        Restangular.one('my_watchings',user.id).put().then(function(data){
+            user.mailing = !user.mailing;
+        });
     }
 
 });

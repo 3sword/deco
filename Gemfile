@@ -8,6 +8,8 @@ gem "activerecord"
 gem "sinatra-activerecord"
 gem "bcrypt-ruby"
 gem "thin"
+gem "mail"
+gem "sidekiq"
 
 group :development do
     gem "shotgun"

@@ -31,3 +31,22 @@ decoDirectives.directive('equals', function() {
   }
 });
 
+decoDirectives.directive('ngVisible', function() {
+  return {
+    restrict: 'A', // only activate on element attribute
+    link: function(scope, elem, attrs) {
+      scope.$watch(attrs.ngVisible, function(value){
+        if(value) {
+          elem.css({
+            visibility: 'visible'
+          });
+        } else {
+          elem.css({
+            visibility: 'hidden'
+          });
+        }
+      });
+    }
+  }
+});
+

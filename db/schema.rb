@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128052807) do
+ActiveRecord::Schema.define(version: 20140210061629) do
 
   create_table "daily_reports", force: true do |t|
     t.integer  "user_id"
@@ -31,5 +31,11 @@ ActiveRecord::Schema.define(version: 20140128052807) do
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true
+
+  create_table "watchings", force: true do |t|
+    t.integer "user_id",                     null: false
+    t.integer "watching_id",                 null: false
+    t.boolean "mailing",     default: false
+  end
 
 end

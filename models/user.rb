@@ -5,6 +5,12 @@ class User < ActiveRecord::Base
 
     has_many :daily_reports
 
+    has_many :watchings_to, :foreign_key => 'user_id', :class_name => 'Watching'
+    has_many :watchings_from, :foreign_key => 'watching_id', :class_name => 'Watching'
+
+    has_many :watching, :through => :watchings_to, :source => :watching
+    has_many :watched_by, :through => :watchings_from, :source => :user
+
     validates_uniqueness_of :name
 
     def password

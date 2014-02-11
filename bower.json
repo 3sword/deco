@@ -20,6 +20,8 @@
     "angular-sanitize": "~1.2.5",
     "restangular": "~1.2.1",
     "bootstrap": "~3.0.3",
+    "font-awesome": "~4.0.3",
+    "angular-bootstrap": "~0.10.0",
     "markdown": "~0.5.0"
   },
   "resolutions": {

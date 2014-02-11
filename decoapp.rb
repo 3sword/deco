@@ -1,11 +1,28 @@
 require "sinatra"
 require "sinatra/namespace"
 require "sinatra/activerecord"
+require "sidekiq"
 require "./config/environments"
 require "./models/user"
 require "./models/daily_report"
+require "./models/watching"
+
+
+class SendMailWorker
+    include Sidekiq::Worker
+    sidekiq_options :queue => :deco
+    def perform(recipient, subject_content, body_content, username, date)
+        Mail.deliver do
+            from 'deco@hr-server.cn.workslan'
+            to recipient
+            subject subject_content
+            body body_content + "\n\nView on DECO: http://hr-server.cn.workslan:3000/#/published_daily_reports/#{username}/#{date}"
+        end
+    end
+end
 
 class DecoApp < Sinatra::Application
+
     register Sinatra::Namespace
     set :index_page, File.read(File.join(settings.public_folder, 'deco.html'))
     set :daily_report_template, File.read("resources/daily_report_template.md")
@@ -106,7 +123,7 @@ class DecoApp < Sinatra::Application
         end
 
         get "/published_daily_reports" do
-            reports = DailyReport.published
+            reports = DailyReport.published.watched_by(User.find(session[:user][:id]))
             reports = reports.where(:user_id => params[:userid]) unless params[:userid].nil?
             if params[:period].nil?
                 reports = reports.updated_today.order('updated_at DESC')
@@ -157,7 +174,8 @@ class DecoApp < Sinatra::Application
                 status = "Draft"
             end
             date = @json["date"]
-            report = DailyReport.find_by(user_id: session[:user][:id], date: date)
+            user = User.find(session[:user][:id])
+            report = user.daily_reports.find_by(date: date)
             if report.nil?
                 report = DailyReport.new(@json)
                 report.status = status
@@ -169,8 +187,56 @@ class DecoApp < Sinatra::Application
                 report.assign_attributes(@json)
                 report.status = status
                 report.save
+                #sendmail
+                if status == "Published"
+                    user.watchings_from.mailing.each do |watching|
+                        addr = watching.user.email
+                        SendMailWorker.perform_async(addr, "#{user.realname} published report of #{report.date}", report.content, user.name, report.date) unless addr.empty?
+                    end
+                end
                 report.to_json
             end
+        end
+
+        get "/my_watchings" do
+            user = User.find(session[:user][:id])
+            result = Hash.new
+            result["watched"] = user.watchings_to.map{ |item|
+                user_hash = item.watching.serializable_hash(:except => :encrypted_password)
+                user_hash["mailing"] = item.mailing
+                user_hash
+            }
+            result["unwatched"] = (User.all - user.watching - [user]).map { |item|
+                item.serializable_hash(:except => :encrypted_password)
+            }
+            result.to_json
+        end
+
+        #toggle mailing
+        put "/my_watchings/:user_id" do
+            user = User.find(session[:user][:id])
+            watching = user.watchings_to.find_by(:watching_id => params[:user_id])
+            watching.mailing = !watching.mailing
+            watching.save
+            status 200
+        end
+
+        #add watching
+        post "/my_watchings" do
+            user = User.find(session[:user][:id])
+            watching = Watching.new
+            watching.user_id = user.id
+            watching.watching_id = @json["id"]
+            watching.save
+            status 200
+        end
+
+        #remove watching
+        delete "/my_watchings/:user_id" do
+            user = User.find(session[:user][:id])
+            watching = Watching.find_by(:user_id => user.id, :watching_id => params[:user_id])
+            watching.destroy
+            status 200
         end
     end
 

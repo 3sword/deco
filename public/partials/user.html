@@ -8,6 +8,12 @@
         <div class="panel-body">
           <form class="form-horizontal" role="form" ng-submit="updateUser()">
               <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Account</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control disabled" id="name" placeholder="Enter name" ng-model="user.name" required="" disabled>
+                </div>
+              </div>
+              <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" id="name" placeholder="Enter name" ng-model="user.realname" required="">
