@@ -58,17 +58,14 @@
             <ul class="media-list">
                 <li ng-repeat="user in group.users" class="media">
                     <a class="pull-left" href="#">
-                        <img class="media-object" data-src="user_icon.png" alt="{{user.name}}">
+                        <h4>{{user.name}}</h4>
                     </a>
                     <div ng-if="user.published" class="media-body">
                         <div class="media-heading">
-                            <h4>{{user.name}}</h4>
-                        </div>
-                        <p> 
                             <a href="#/published_daily_reports/{{user.name}}/{{user.time | date:'yyyy-MM-dd'}}">
                                 Created at {{user.time | date:'shortTime'}}
                             </a>
-                        </p>
+                        </div>
                     </div>
                     <div ng-if="!user.published" class="media-body">
                         <h5 class="media-heading"> Not published yet </h5>
