@@ -97,7 +97,7 @@ decoControllers.controller('UserCtrl', function($scope, Restangular, $location, 
     }
 });
 
-decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) {
+decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, $filter) {
     var today;
 
     loadReports();
@@ -167,12 +167,14 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location) 
             user.mailing = !user.mailing;
         });
     }
+
+    $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
 });
 
 decoControllers.controller('AddGroupCtrl', function($scope, Restangular, $location) {
     $scope.addGroup = function() {
         Restangular.all('groups').post({name: $scope.groupName}).then(function() {
-            $location.path('/home');
+            $location.path('/groups/' + $scope.groupName + '/settings');
         }, function() {
 
         });
@@ -194,6 +196,7 @@ decoControllers.controller('GroupSettingsCtrl', function($scope, Restangular, $l
         if ($scope.userName && $scope.userName.length > 0) {
             Restangular.one('groups', groupName).post('users', {name: $scope.userName}).then(function() {
                 $scope.group.users.push({name: $scope.userName});
+                $scope.userName = '';
             });
         }
     };

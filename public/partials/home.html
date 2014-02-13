@@ -35,6 +35,23 @@
         </p>
     </div>
 
+    <div class="row">
+        <div class="btn-group pull-right">
+            <a href="#/my_daily_reports/{{today}}" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-list-alt"></span> today
+            </a>
+            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#/report_list">Reports</a></li>
+                <li><a href="#/groups">Groups</a></li>
+                <li class="divider"></li>
+                <li><a href="#/add_group">Add Group</a></li>
+            </ul>
+        </div>
+    </div>
     <div ng-repeat="group in groups" class="row group-section">
         <h2 class="group-name"><a href="#/groups/{{group.name}}/settings">{{group.name}}</a></h2>
         <div class="user-list">
