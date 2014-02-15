@@ -98,23 +98,6 @@ decoControllers.controller('UserCtrl', function($scope, Restangular, $location, 
 });
 
 decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, $filter) {
-    var today;
-
-    loadReports();
-    function loadReports(){
-        Restangular.one('my_daily_reports','today').get().then(function(data){
-            $scope.todaysReport = data;
-            today = data.date;
-            Restangular.all('published_daily_reports').getList().then(function(data){
-                var len = data.length, i;
-                for(i=0;i<len;i++) {
-                    data[i].dateDescription = convertDateDescription(data[i].date);
-                }
-                $scope.publishedReports = data;
-            });
-        });
-    }
-
     Restangular.one('my_watchings').get().then(function(data){
         $scope.watchedUsers = data.watched;
         $scope.unwatchedUsers = data.unwatched;
@@ -138,6 +121,7 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, 
     });
 
     $scope.groups = groups;
+    $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
 
     $scope.watchUser = function($user, $model, $label) {
         Restangular.all('my_watchings').post($user).then(function(data){
@@ -167,8 +151,6 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, 
             user.mailing = !user.mailing;
         });
     }
-
-    $scope.today = $filter('date')(Date.now(), 'yyyy-MM-dd');
 });
 
 decoControllers.controller('AddGroupCtrl', function($scope, Restangular, $location) {
