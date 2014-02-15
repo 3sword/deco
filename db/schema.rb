@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210061629) do
+ActiveRecord::Schema.define(version: 20140215073016) do
 
   create_table "daily_reports", force: true do |t|
     t.integer  "user_id"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20140210061629) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "content"
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "name",       null: false
+    t.integer  "owner_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -31,6 +38,15 @@ ActiveRecord::Schema.define(version: 20140210061629) do
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true
+
+  create_table "users_groups", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "group_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users_groups", ["user_id"], name: "index_users_groups_on_user_id"
 
   create_table "watchings", force: true do |t|
     t.integer "user_id",                     null: false
