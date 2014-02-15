@@ -104,7 +104,7 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, 
     });
 
     var groups = [];
-    Restangular.all('groups').getList().then(function(groupList) {
+    Restangular.all('groups').getList({scope: 'user'}).then(function(groupList) {
         function addGroup(name) {
             return function(data) {
                 groups.push({
@@ -151,6 +151,20 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, 
             user.mailing = !user.mailing;
         });
     }
+});
+
+decoControllers.controller('GroupsCtrl', function($scope, Restangular, $location) {
+    Restangular.all('groups').getList({scope: 'all'}).then(function(groups) {
+        $scope.groups = groups;
+    });
+
+    $scope.joinGroup = function(groupName) {
+
+    };
+
+    $scope.leaveGroup = function(groupName) {
+
+    };
 });
 
 decoControllers.controller('AddGroupCtrl', function($scope, Restangular, $location) {

@@ -41,6 +41,10 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'partials/user.html',
     controller: 'UserCtrl'
   });
+  $routeProvider.when('/groups', {
+    templateUrl : 'partials/groups.html',
+    controller: 'GroupsCtrl'
+  });
   $routeProvider.when('/groups/:group/settings', {
     templateUrl : 'partials/group_settings.html',
     controller: 'GroupSettingsCtrl'

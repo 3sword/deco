@@ -241,12 +241,25 @@ class DecoApp < Sinatra::Application
         end
 
         get "/groups" do
+            scope = params[:scope]
+
             user = User.find(session[:user][:id])
             if user.nil?
                 halt 403
             end
-            groups = user.groups
-            groups.to_json(:only => [:name])
+            userGroups = user.groups
+
+            if scope == "user"
+                userGroups.to_json(:only => [:name])
+            else #default to return all groups
+                groups = Group.all.map do |group|
+                    {
+                        :name => group.name,
+                        :belongs_to => userGroups.include?(group)
+                    }
+                end
+                groups.to_json
+            end
         end
 
         post "/groups" do
@@ -327,5 +340,4 @@ class DecoApp < Sinatra::Application
             reports.to_json
         end
     end
-
 end
