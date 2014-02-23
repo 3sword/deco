@@ -114,6 +114,11 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, 
             }
         }
 
+        if (groupList.length === 0) {
+            $location.path('no_group');
+            return;
+        }
+
         for (var i = 0; i < groupList.length; i++) {
             var groupName = groupList[i].name;
             Restangular.one('groups', groupName).one('today').get().then(addGroup(groupName));

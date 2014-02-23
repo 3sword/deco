@@ -53,6 +53,9 @@ decoApp.config(function($routeProvider, $locationProvider) {
     templateUrl : 'partials/add_group.html',
     controller: 'AddGroupCtrl'
   });
+  $routeProvider.when('/no_group', {
+    templateUrl : 'partials/no_group.html'
+  });
   $routeProvider.otherwise({
     redirectTo : '/home'
   });
