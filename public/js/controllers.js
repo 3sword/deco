@@ -153,17 +153,33 @@ decoControllers.controller('HomeCtrl', function($scope, Restangular, $location, 
     }
 });
 
-decoControllers.controller('GroupsCtrl', function($scope, Restangular, $location) {
+decoControllers.controller('GroupsCtrl', function($scope, Restangular, $location, AuthenticationService) {
     Restangular.all('groups').getList({scope: 'all'}).then(function(groups) {
         $scope.groups = groups;
     });
 
     $scope.joinGroup = function(groupName) {
+        var userName = AuthenticationService.getUser().name;
 
+        Restangular.one('groups', groupName).post('users', {name: userName}).then(function() {
+            $scope.groups.forEach(function(group) {
+                if (group.name === groupName) {
+                    group.belongs_to = true;
+                }
+            });
+        });
     };
 
     $scope.leaveGroup = function(groupName) {
+        var userName = AuthenticationService.getUser().name;
 
+        Restangular.one('groups', groupName).one('users').remove({name: userName}).then(function() {
+            $scope.groups.forEach(function(group) {
+                if (group.name === groupName) {
+                    group.belongs_to = false;
+                }
+            });
+        })
     };
 });
 

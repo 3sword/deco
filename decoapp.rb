@@ -240,6 +240,7 @@ class DecoApp < Sinatra::Application
             watching.destroy
         end
 
+        #get all groups information by scope
         get "/groups" do
             scope = params[:scope]
 
@@ -262,6 +263,7 @@ class DecoApp < Sinatra::Application
             end
         end
 
+        #add new group
         post "/groups" do
             name = @json["name"]
             owner = session[:user][:id]
@@ -269,6 +271,7 @@ class DecoApp < Sinatra::Application
             status 200
         end
 
+        #get one group's information
         get "/groups/:group" do
             group = Group.find_by(name: params[:group])
 
@@ -279,6 +282,7 @@ class DecoApp < Sinatra::Application
             }.to_json
         end
 
+        #change group info
         post "/groups/:group" do
             name = @json["name"]
             owner = @json["owner"]
@@ -292,12 +296,14 @@ class DecoApp < Sinatra::Application
             status 200 
         end
 
+        #get all users in a group
         get "/groups/:group/users" do
             group = Group.find_by(name: params[:group])
 
             group.users.to_json(:only => [:name])
         end
 
+        #add a user to one group
         post "/groups/:group/users" do
             name = @json["name"]
             group = Group.find_by(name: params[:group])
@@ -308,6 +314,7 @@ class DecoApp < Sinatra::Application
             status 200
         end
 
+        #delete a user from a group
         delete "/groups/:group/users" do
             name = params[:name]
             group = Group.find_by(name: params[:group])
@@ -323,6 +330,7 @@ class DecoApp < Sinatra::Application
             end
         end
 
+        #get all today's activities of one group
         get "/groups/:group/today" do
             group = Group.find_by(name: params[:group])
             published_users = Array.new
