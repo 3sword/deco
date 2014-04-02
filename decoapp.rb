@@ -191,7 +191,7 @@ class DecoApp < Sinatra::Application
                 if status == "Published"
                     user.watchings_from.mailing.each do |watching|
                         addr = watching.user.email
-                        SendMailWorker.perform_async(addr, "#{user.realname} published report of #{report.date}", report.content, user.name, report.date) unless addr.empty?
+                        SendMailWorker.perform_async(addr, "#{user.realname} published report of #{report.date}", report.content, user.name, report.date) unless addr.nil? || addr.empty?
                     end
                 end
                 report.to_json
