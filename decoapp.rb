@@ -90,6 +90,7 @@ class DecoApp < Sinatra::Application
             user.name = @json["username"]
             user.realname = @json["realname"]
             user.password = @json["password"]
+            user.email = @json["email"]
             user.save!
             session[:user] = {:id => user.id, :name => user.name}
             user.to_json(:except => :encrypted_password)
