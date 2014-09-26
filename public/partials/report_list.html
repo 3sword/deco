@@ -1,7 +1,7 @@
 <div class="container">
     <form class="form-inline" role="form">
       <div class="form-group">
-          <input type="text" class="form-control" ng-model="user" typeahead="u.realname for u in users | filter:$viewValue | limitTo:8" typeahead-on-select="fetchReports()">
+          <input type="text" class="form-control" ng-model="user" typeahead="u as u.realname for u in users | filter:$viewValue | limitTo:8" typeahead-on-select="fetchReports()">
       </div>
       <div class="form-group">
         <label for="period">Period</label>
