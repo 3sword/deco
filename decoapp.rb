@@ -124,7 +124,7 @@ class DecoApp < Sinatra::Application
         end
 
         get "/published_daily_reports" do
-            reports = DailyReport.published.watched_by(User.find(session[:user][:id]))
+            reports = DailyReport.published
             reports = reports.where(:user_id => params[:userid]) unless params[:userid].nil?
             if params[:period].nil?
                 reports = reports.updated_today.order('updated_at DESC')
